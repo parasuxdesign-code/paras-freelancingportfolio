@@ -1,0 +1,486 @@
+/* ==========================================================================
+   Paras Bhatnagar — Portfolio
+   Design tokens + base styles ported verbatim from the original
+   Claude Design (.dc.html) source of truth, with the DC runtime removed.
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --bg: #05050a;
+  --panel-strong: rgba(9, 9, 15, 0.88);
+  --panel-nav: rgba(13, 13, 20, 0.72);
+
+  /* Text */
+  --text: #f2f3f7;
+  --text-2: #c1c3cd;
+  --text-3: #9698a6;
+  --text-4: #7a7c88;
+  --text-5: #61636f;
+  --text-6: #5e606c;
+
+  /* Accent (restrained green) */
+  --accent: #79d208;
+  --accent-bright: #8fe02e;
+  --accent-soft: #a6e85c;
+  --accent-hover: #c4f291;
+
+  /* Radius system: 8 / 12 / 16 / 20 / 24 / 32 */
+  --r-8: 8px;
+  --r-12: 12px;
+  --r-16: 16px;
+  --r-20: 20px;
+  --r-24: 24px;
+  --r-32: 32px;
+
+  /* Easing */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--accent-soft);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accent-hover);
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r-8);
+}
+
+::selection {
+  background: rgba(121, 210, 8, 0.35);
+}
+::placeholder {
+  color: var(--text-6);
+}
+
+/* ------------------------------- Keyframes ------------------------------- */
+@keyframes om-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes om-panel {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --------------------------- Entrance reveals ---------------------------- */
+/* Ported from data-reveal: opacity + translateY, revealed via IO/sweep. */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s var(--ease-out),
+    transform 0.6s var(--ease-out);
+}
+.reveal.reveal--slow {
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* -------------------------- Hover / focus states ------------------------- */
+/* These replace DC's style-hover / style-focus / style-active attributes.   */
+
+/* Primary "glass + green" CTA button */
+.btn-primary {
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 220ms ease;
+}
+.btn-primary:hover {
+  color: #fff;
+  border-color: rgba(150, 231, 60, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(150, 231, 60, 0.35),
+    0 12px 40px -8px rgba(101, 180, 10, 0.85),
+    inset 0 -22px 30px -20px rgba(165, 235, 90, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Secondary / ghost button */
+.btn-ghost {
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 220ms ease;
+}
+.btn-ghost:hover {
+  color: var(--text);
+  border-color: rgba(150, 231, 60, 0.6);
+  box-shadow:
+    0 8px 30px -12px rgba(101, 180, 10, 0.6),
+    inset 0 -18px 26px -20px rgba(165, 235, 90, 0.6);
+}
+.btn-ghost:active {
+  transform: scale(0.98);
+}
+
+/* About "Know more" ghost variant (slightly stronger glow) */
+.btn-ghost-strong {
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 200ms ease;
+}
+.btn-ghost-strong:hover {
+  color: var(--text);
+  border-color: rgba(150, 231, 60, 0.75);
+  box-shadow:
+    0 10px 34px -12px rgba(101, 180, 10, 0.75),
+    inset 0 -18px 26px -20px rgba(165, 235, 90, 0.8);
+}
+.btn-ghost-strong:active {
+  transform: scale(0.98);
+}
+
+/* Nav CTA (compact glow) */
+.nav-cta {
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 220ms ease;
+}
+.nav-cta:hover {
+  color: #fff;
+  border-color: rgba(150, 231, 60, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(150, 231, 60, 0.35),
+    0 10px 34px -8px rgba(101, 180, 10, 0.8),
+    inset 0 -20px 28px -20px rgba(165, 235, 90, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.nav-cta:active {
+  transform: scale(0.98);
+}
+
+/* Exploration CTA button (largest glow) */
+.btn-explore {
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 200ms ease;
+}
+.btn-explore:hover {
+  color: #fff;
+  border-color: rgba(150, 231, 60, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(150, 231, 60, 0.35),
+    0 14px 44px -8px rgba(101, 180, 10, 0.9),
+    inset 0 -22px 30px -20px rgba(165, 235, 90, 0.9);
+}
+.btn-explore:active {
+  transform: scale(0.98);
+}
+
+/* Submit button */
+.btn-submit {
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 200ms ease;
+}
+.btn-submit:hover {
+  border-color: rgba(150, 231, 60, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(150, 231, 60, 0.35),
+    0 12px 40px -8px rgba(101, 180, 10, 0.85),
+    inset 0 -22px 30px -20px rgba(165, 235, 90, 0.9);
+}
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+/* Mobile menu button */
+.menu-btn {
+  transition:
+    transform 200ms ease,
+    box-shadow 300ms ease;
+}
+.menu-btn:active {
+  transform: scale(0.97);
+}
+
+/* Mobile menu links */
+.mobile-link {
+  transition: background 220ms ease;
+}
+.mobile-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+/* Mobile menu CTA */
+.mobile-cta {
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+.mobile-cta:hover {
+  color: #fff;
+  border-color: rgba(150, 231, 60, 0.9);
+  box-shadow:
+    0 10px 34px -10px rgba(101, 180, 10, 0.8),
+    inset 0 -20px 28px -20px rgba(165, 235, 90, 0.8);
+}
+
+/* Contact detail chips (email link) */
+.contact-chip {
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+.contact-chip:hover {
+  border-color: rgba(150, 231, 60, 0.6);
+  color: var(--text);
+  box-shadow: 0 0 20px -10px rgba(121, 210, 8, 0.8);
+}
+
+/* Footer nav links */
+.footer-link {
+  transition: color 220ms ease;
+}
+.footer-link:hover {
+  color: var(--accent-hover);
+}
+
+/* Footer social buttons */
+.social-btn {
+  transition:
+    border-color 300ms ease,
+    transform 300ms ease,
+    box-shadow 300ms ease;
+}
+.social-btn:hover {
+  border-color: rgba(150, 231, 60, 0.7);
+  transform: translateY(-2px);
+  color: var(--accent-hover);
+  box-shadow: 0 0 20px -8px rgba(121, 210, 8, 0.85);
+}
+
+/* Back-to-top button */
+.top-btn {
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease,
+    transform 200ms ease;
+}
+.top-btn:hover {
+  border-color: rgba(150, 231, 60, 0.7);
+  box-shadow: 0 0 22px -10px rgba(121, 210, 8, 0.85);
+}
+.top-btn:active {
+  transform: scale(0.97);
+}
+
+/* Testimonial carousel arrows */
+.carousel-btn {
+  transition:
+    border-color 280ms ease,
+    box-shadow 300ms ease,
+    transform 200ms ease;
+}
+.carousel-btn:hover {
+  border-color: rgba(150, 231, 60, 0.7);
+  box-shadow: 0 0 20px -8px rgba(121, 210, 8, 0.8);
+}
+.carousel-btn:active {
+  transform: scale(0.94);
+}
+.carousel-track {
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Nav links (desktop) */
+.nav-link {
+  transition: color 200ms ease;
+}
+
+/* Service card */
+.service-card {
+  transition:
+    transform 320ms var(--ease-out),
+    border-color 320ms ease,
+    box-shadow 320ms ease;
+}
+.service-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(150, 231, 60, 0.45);
+  box-shadow:
+    0 24px 50px -28px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(150, 231, 60, 0.14),
+    inset 0 -30px 40px -34px rgba(165, 235, 90, 0.7);
+}
+.service-card:focus {
+  border-color: rgba(150, 231, 60, 0.7);
+}
+.service-card .service-arrow {
+  transition:
+    transform 320ms var(--ease-out),
+    background 320ms ease,
+    color 320ms ease,
+    box-shadow 320ms ease;
+}
+.service-card:hover .service-arrow {
+  transform: translate(4px, -4px);
+  background: rgba(121, 210, 8, 0.95);
+  color: #0a1400;
+  border-color: rgba(150, 231, 60, 0.9);
+  box-shadow: 0 0 18px -4px rgba(121, 210, 8, 0.9);
+}
+
+/* Work gallery tiles */
+.work-tile {
+  transition: opacity 320ms ease;
+}
+.work-tile .work-tile__scrim {
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+.work-tile .work-tile__meta {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 320ms ease,
+    transform 320ms var(--ease-out);
+}
+.work-tile:hover .work-tile__scrim {
+  opacity: 1;
+}
+.work-tile:hover .work-tile__meta {
+  opacity: 1;
+  transform: none;
+}
+
+/* Form fields */
+.field {
+  transition:
+    border-color 260ms ease,
+    background 260ms ease,
+    box-shadow 260ms ease;
+}
+.field:focus {
+  border-color: rgba(150, 231, 60, 0.85);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 0 4px rgba(121, 210, 8, 0.14);
+  outline: none;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 12px 16px;
+  background: #15161f;
+  color: #fff;
+  border-radius: var(--r-12);
+  z-index: 200;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+}
+
+/* Custom cursor (desktop hover only) */
+.dc-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #0a1400;
+  font: 600 11px/1 'Plus Jakarta Sans', sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 18px -2px rgba(121, 210, 8, 0.9);
+  transition:
+    width 0.28s var(--ease-out),
+    height 0.28s var(--ease-out),
+    opacity 0.24s ease;
+}
+
+/* --------------------------- Reduced motion ----------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
