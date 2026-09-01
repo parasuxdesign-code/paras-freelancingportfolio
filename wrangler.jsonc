@@ -1,0 +1,10 @@
+{
+  // Cloudflare configuration prepared for later deployment of the static Vite build.
+  // This does NOT deploy anything and does NOT touch any production config.
+  // Deploy later with:  npx wrangler deploy   (after `npm run build`)
+  "name": "paras-freelancingportfolio",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}

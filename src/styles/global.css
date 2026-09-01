@@ -1,0 +1,277 @@
+/* ==========================================================================
+   Paras Bhatnagar — Portfolio
+   Global styles ported verbatim from the Claude Design (.dc.html) source of
+   truth. The DC runtime (support.js / <x-dc> / DCLogic) has been removed.
+   ========================================================================== */
+
+/* Custom fonts declared by the source. The export ships no font files, so the
+   browser falls back to the web fonts loaded in index.html (Plus Jakarta Sans
+   for body, Playfair Display for the serif display face) — identical to how the
+   original .dc.html renders. To use the real faces, drop the .woff2/.otf files
+   into /public/fonts and these @font-face rules will pick them up. */
+@font-face {
+  font-family: 'Metropolis';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Metropolis-Medium.woff2') format('woff2'),
+    url('/fonts/Metropolis-Medium.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Metropolis';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Metropolis-SemiBold.woff2') format('woff2'),
+    url('/fonts/Metropolis-SemiBold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Metropolis';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Metropolis-Bold.woff2') format('woff2'),
+    url('/fonts/Metropolis-Bold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'The Seasons';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/TheSeasons-Bold.woff2') format('woff2'),
+    url('/fonts/TheSeasons-Bold.otf') format('opentype');
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  background: #05050a;
+}
+body {
+  margin: 0;
+  background: #05050a;
+  color: #f2f3f7;
+  font-family: 'Metropolis', 'Plus Jakarta Sans', system-ui, -apple-system,
+    Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+* {
+  box-sizing: border-box;
+}
+a {
+  color: #a6e85c;
+  text-decoration: none;
+}
+a:hover {
+  color: #c4f291;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid #79d208;
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+::selection {
+  background: rgba(121, 210, 8, 0.35);
+}
+::placeholder {
+  color: #5e606c;
+}
+
+/* Keyframes ---------------------------------------------------------------- */
+@keyframes om-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes om-panel {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes om-live {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+@keyframes om-live-core {
+  0%,
+  100% {
+    opacity: 0.82;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes om-tscroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Material Symbols helper -------------------------------------------------- */
+.om-ms {
+  font-family: 'Material Symbols Rounded';
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* -------------------------------------------------------------------------
+   Hover / focus / active states.
+   The DC runtime applied style-hover / style-focus / style-active pseudo
+   attributes at runtime; here they become real CSS so the markup stays clean.
+   Each element opts in via a class below.
+   ------------------------------------------------------------------------- */
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 12px 16px;
+  background: #15161f;
+  color: #fff;
+  border-radius: 12px;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+  z-index: 200;
+}
+
+/* Nav "Let's Talk" link */
+.nav-talk:hover {
+  color: #b0ee62;
+  filter: drop-shadow(0 0 12px rgba(144, 224, 46, 0.55));
+}
+
+/* Mobile "Menu" button */
+.menu-btn:active {
+  transform: scale(0.97);
+}
+
+/* Mobile menu links + CTA */
+.mobile-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #f2f3f7;
+}
+.mobile-cta:hover {
+  color: #fff;
+  border-color: rgba(150, 231, 60, 0.9);
+  box-shadow: 0 10px 34px -10px rgba(101, 180, 10, 0.8),
+    inset 0 -20px 28px -20px rgba(165, 235, 90, 0.8);
+}
+
+/* Hero primary (green) button */
+.btn-green:hover {
+  color: #000;
+  background: #9eeb3c;
+  box-shadow: 0 10px 34px -10px rgba(144, 224, 46, 0.85);
+}
+.btn-green:active {
+  transform: scale(0.98);
+}
+
+/* Hero secondary (WhatsApp) button */
+.btn-ghost:hover {
+  color: #f2f3f7;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(150, 231, 60, 0.7);
+  box-shadow: 0 10px 30px -14px rgba(121, 210, 8, 0.8);
+}
+.btn-ghost:active {
+  transform: scale(0.98);
+}
+
+/* About LinkedIn button */
+.btn-green-sm:hover {
+  color: #000;
+  background: #9eeb3c;
+  box-shadow: 0 10px 30px -12px rgba(144, 224, 46, 0.85);
+}
+.btn-green-sm:active {
+  transform: scale(0.98);
+}
+
+/* Closing CTA button */
+.btn-green-lg:hover {
+  color: #000;
+  background: #9eeb3c;
+  box-shadow: 0 12px 40px -12px rgba(144, 224, 46, 0.9);
+}
+.btn-green-lg:active {
+  transform: scale(0.98);
+}
+
+/* Testimonial LinkedIn chip */
+.tlink:hover {
+  color: #0a66c2;
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(10, 102, 194, 0.55);
+}
+
+/* Footer links + back-to-top */
+.footer-link:hover {
+  color: #fff;
+}
+.footer-top:hover {
+  color: #fff;
+}
+
+/* Reduced motion ----------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  /* Reveal-on-scroll elements shouldn't stay hidden without motion. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
