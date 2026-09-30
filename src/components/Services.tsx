@@ -1,6 +1,5 @@
 import { SERVICE_CARDS, SERVICE_ICON_STYLE } from '../data/content';
 
-const serif = "'The Seasons','Playfair Display',Georgia,serif";
 
 const revealStyle: React.CSSProperties = {
   opacity: 0,
@@ -123,7 +122,7 @@ export function Services() {
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'stretch',
-    gap: 24,
+    gap: 16,
   };
 
   return (
@@ -146,7 +145,7 @@ export function Services() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 'clamp(40px,5vw,61px)',
+          gap: 32,
         }}
       >
         <div
@@ -177,7 +176,7 @@ export function Services() {
             id="services-title"
             style={{
               maxWidth: 370,
-              fontFamily: serif,
+              fontFamily: "'The Seasons'",
               fontSize: 'clamp(30px,4.2vw,42px)',
               fontWeight: 700,
               lineHeight: '100%',
@@ -194,7 +193,7 @@ export function Services() {
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            gap: 24,
+            gap: 16,
             alignItems: 'stretch',
           }}
         >

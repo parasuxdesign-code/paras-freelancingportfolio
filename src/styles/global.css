@@ -4,17 +4,17 @@
    truth. The DC runtime (support.js / <x-dc> / DCLogic) has been removed.
    ========================================================================== */
 
-/* Custom fonts declared by the source. The export ships no font files, so the
+/* Custom fonts declared by the source. The export ships no font files so the
    browser falls back to the web fonts loaded in index.html (Plus Jakarta Sans
-   for body, Playfair Display for the serif display face) — identical to how the
-   original .dc.html renders. To use the real faces, drop the .woff2/.otf files
+   for body Playfair Display for the serif display face) — identical to how the
+   original .dc.html renders. To use the real faces drop the .woff2/.otf files
    into /public/fonts and these @font-face rules will pick them up. */
 @font-face {
   font-family: 'Metropolis';
   font-weight: 500;
   font-style: normal;
   font-display: swap;
-  src: url('/fonts/Metropolis-Medium.woff2') format('woff2'),
+  src: 
     url('/fonts/Metropolis-Medium.otf') format('opentype');
 }
 @font-face {
@@ -22,7 +22,7 @@
   font-weight: 600;
   font-style: normal;
   font-display: swap;
-  src: url('/fonts/Metropolis-SemiBold.woff2') format('woff2'),
+  src: 
     url('/fonts/Metropolis-SemiBold.otf') format('opentype');
 }
 @font-face {
@@ -30,7 +30,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url('/fonts/Metropolis-Bold.woff2') format('woff2'),
+  src: 
     url('/fonts/Metropolis-Bold.otf') format('opentype');
 }
 @font-face {
@@ -38,7 +38,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url('/fonts/TheSeasons-Bold.woff2') format('woff2'),
+  src: 
     url('/fonts/TheSeasons-Bold.otf') format('opentype');
 }
 
@@ -51,8 +51,8 @@ body {
   margin: 0;
   background: #05050a;
   color: #f2f3f7;
-  font-family: 'Metropolis', 'Plus Jakarta Sans', system-ui, -apple-system,
-    Helvetica, Arial, sans-serif;
+  font-family: 'Metropolis',
+    Helvetica Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 * {
@@ -65,17 +65,17 @@ a {
 a:hover {
   color: #c4f291;
 }
-h1,
-h2,
-h3,
-h4,
-p,
-figure,
+h1
+h2
+h3
+h4
+p
+figure
 blockquote {
   margin: 0;
 }
-button,
-input,
+button
+input
 textarea {
   font: inherit;
   color: inherit;
@@ -86,7 +86,7 @@ textarea {
   border-radius: 8px;
 }
 ::selection {
-  background: rgba(121, 210, 8, 0.35);
+  background: rgba(121 210, 8, 0.35);
 }
 ::placeholder {
   color: #5e606c;
@@ -124,7 +124,8 @@ textarea {
   }
 }
 @keyframes om-live-core {
-  0%,
+  0% {
+  }
   100% {
     opacity: 0.82;
   }
@@ -182,7 +183,7 @@ textarea {
 /* Nav "Let's Talk" link */
 .nav-talk:hover {
   color: #b0ee62;
-  filter: drop-shadow(0 0 12px rgba(144, 224, 46, 0.55));
+  filter: drop-shadow(0 0 12px rgba(144 224, 46, 0.55));
 }
 
 /* Mobile "Menu" button */
@@ -192,21 +193,21 @@ textarea {
 
 /* Mobile menu links + CTA */
 .mobile-link:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255 255, 255, 0.05);
   color: #f2f3f7;
 }
 .mobile-cta:hover {
   color: #fff;
-  border-color: rgba(150, 231, 60, 0.9);
-  box-shadow: 0 10px 34px -10px rgba(101, 180, 10, 0.8),
-    inset 0 -20px 28px -20px rgba(165, 235, 90, 0.8);
+  border-color: rgba(150 231, 60, 0.9);
+  box-shadow: 0 10px 34px -10px rgba(101 180, 10, 0.8),
+    inset 0 -20px 28px -20px rgba(165 235, 90, 0.8);
 }
 
 /* Hero primary (green) button */
 .btn-green:hover {
   color: #000;
   background: #9eeb3c;
-  box-shadow: 0 10px 34px -10px rgba(144, 224, 46, 0.85);
+  box-shadow: 0 10px 34px -10px rgba(144 224, 46, 0.85);
 }
 .btn-green:active {
   transform: scale(0.98);
@@ -215,9 +216,9 @@ textarea {
 /* Hero secondary (WhatsApp) button */
 .btn-ghost:hover {
   color: #f2f3f7;
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(150, 231, 60, 0.7);
-  box-shadow: 0 10px 30px -14px rgba(121, 210, 8, 0.8);
+  background: rgba(255 255, 255, 0.08);
+  border-color: rgba(150 231, 60, 0.7);
+  box-shadow: 0 10px 30px -14px rgba(121 210, 8, 0.8);
 }
 .btn-ghost:active {
   transform: scale(0.98);
@@ -227,7 +228,7 @@ textarea {
 .btn-green-sm:hover {
   color: #000;
   background: #9eeb3c;
-  box-shadow: 0 10px 30px -12px rgba(144, 224, 46, 0.85);
+  box-shadow: 0 10px 30px -12px rgba(144 224, 46, 0.85);
 }
 .btn-green-sm:active {
   transform: scale(0.98);
@@ -237,7 +238,7 @@ textarea {
 .btn-green-lg:hover {
   color: #000;
   background: #9eeb3c;
-  box-shadow: 0 12px 40px -12px rgba(144, 224, 46, 0.9);
+  box-shadow: 0 12px 40px -12px rgba(144 224, 46, 0.9);
 }
 .btn-green-lg:active {
   transform: scale(0.98);
@@ -246,8 +247,8 @@ textarea {
 /* Testimonial LinkedIn chip */
 .tlink:hover {
   color: #0a66c2;
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(10, 102, 194, 0.55);
+  background: rgba(255 255, 255, 0.09);
+  border-color: rgba(10 102, 194, 0.55);
 }
 
 /* Footer links + back-to-top */
@@ -263,8 +264,8 @@ textarea {
   html {
     scroll-behavior: auto;
   }
-  *,
-  *::before,
+  *
+  *::before
   *::after {
     animation: none !important;
     transition: none !important;
@@ -274,4 +275,15 @@ textarea {
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* Reset default browser typography margins so spacing is controlled by gap */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
 }

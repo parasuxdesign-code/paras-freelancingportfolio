@@ -9,7 +9,6 @@ const rise = (delay: number): React.CSSProperties => ({
   animationDelay: `${delay}ms`,
 });
 
-const serif = "'The Seasons','Playfair Display',Georgia,serif";
 
 export function Hero({ showStats = true }: HeroProps) {
   return (
@@ -21,11 +20,11 @@ export function Hero({ showStats = true }: HeroProps) {
         width: '100%',
         margin: '0 auto',
         padding:
-          'clamp(120px,14vw,169px) clamp(20px,3vw,40px) clamp(48px,6vw,72px)',
+          'clamp(90px,10vw,120px) clamp(20px,3vw,40px) 32px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 'clamp(40px,6vw,61px)',
+        gap: 24,
       }}
     >
       <div
@@ -35,7 +34,7 @@ export function Hero({ showStats = true }: HeroProps) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 22,
+          gap: 12,
           textAlign: 'center',
         }}
       >
@@ -120,13 +119,13 @@ export function Hero({ showStats = true }: HeroProps) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: 24,
+            gap: 12,
           }}
         >
           <h1
             id="hero-title"
             style={{
-              fontFamily: serif,
+              fontFamily: "'The Seasons'",
               fontWeight: 700,
               fontSize: 'clamp(30px,4.2vw,42px)',
               lineHeight: '100%',
@@ -159,6 +158,7 @@ export function Hero({ showStats = true }: HeroProps) {
             alignItems: 'center',
             justifyContent: 'center',
             gap: 12,
+            marginTop: 20,
             ...rise(420),
           }}
         >
@@ -234,6 +234,7 @@ export function Hero({ showStats = true }: HeroProps) {
             display: 'flex',
             alignItems: 'center',
             gap: 12,
+            marginTop: 24,
             padding: '1px 10px',
           }}
         >

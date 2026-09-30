@@ -1,6 +1,5 @@
 import { SOCIALS, LINKS } from '../data/content';
 
-const serif = "'The Seasons','Playfair Display',Georgia,serif";
 
 interface ClosingCTAProps {
   onToTop: () => void;
@@ -21,7 +20,7 @@ export function ClosingCTA({ onToTop }: ClosingCTAProps) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 'clamp(80px,12vw,150px)',
+        gap: 32,
         backgroundColor: '#08090E',
       }}
     >
@@ -58,7 +57,7 @@ export function ClosingCTA({ onToTop }: ClosingCTAProps) {
           id="explore-title"
           style={{
             margin: 0,
-            fontFamily: serif,
+            fontFamily: "'The Seasons'",
             fontSize: 'clamp(34px,5.4vw,66px)',
             lineHeight: 1.12,
             fontWeight: 700,
@@ -112,7 +111,7 @@ export function ClosingCTA({ onToTop }: ClosingCTAProps) {
           style={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: 24,
+            gap: 16,
             alignItems: 'center',
             justifyContent: 'space-between',
             paddingBottom: 40,

@@ -1,7 +1,6 @@
 import { PRINCIPLES, LINKS } from '../data/content';
 import { Icon } from './Icon';
 
-const serif = "'The Seasons','Playfair Display',Georgia,serif";
 
 export function About() {
   return (
@@ -19,7 +18,7 @@ export function About() {
         borderRadius: 32,
         border: '1px solid rgba(255,255,255,.07)',
         display: 'grid',
-        gap: 'clamp(32px,4vw,48px)',
+        gap: 32,
         gridTemplateColumns: 'repeat(auto-fit,minmax(min(260px,100%),1fr))',
       }}
     >
@@ -68,7 +67,7 @@ export function About() {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: 20,
+          gap: 16,
           opacity: 0,
           transform: 'translateY(14px)',
           transition:
@@ -88,7 +87,7 @@ export function About() {
         <h2
           id="about-title"
           style={{
-            fontFamily: serif,
+            fontFamily: "'The Seasons'",
             fontSize: 'clamp(28px,3.4vw,38px)',
             lineHeight: 1.15,
             fontWeight: 700,

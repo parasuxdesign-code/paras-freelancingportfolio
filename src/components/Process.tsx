@@ -1,7 +1,6 @@
 import { PROCESS_STEPS } from '../data/content';
 import { Icon } from './Icon';
 
-const serif = "'The Seasons','Playfair Display',Georgia,serif";
 
 export function Process() {
   return (
@@ -18,7 +17,7 @@ export function Process() {
         padding: 'clamp(72px,8vw,104px) clamp(20px,3vw,40px)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'clamp(48px,6vw,80px)',
+        gap: 32,
       }}
     >
       <img
@@ -64,7 +63,7 @@ export function Process() {
         <h2
           id="process-title"
           style={{
-            fontFamily: serif,
+            fontFamily: "'The Seasons'",
             fontSize: 'clamp(30px,4.2vw,42px)',
             lineHeight: 1.15,
             fontWeight: 700,
@@ -86,7 +85,7 @@ export function Process() {
           margin: 0,
           padding: 0,
           display: 'grid',
-          gap: 'clamp(28px,3.5vw,44px)',
+          gap: 24,
           gridTemplateColumns: 'repeat(auto-fit,minmax(min(260px,100%),1fr))',
         }}
       >
@@ -97,7 +96,7 @@ export function Process() {
             style={{
               position: 'relative',
               display: 'flex',
-              gap: 20,
+              gap: 16,
               opacity: 0.18,
               transform: 'translate3d(0,64px,0)',
               willChange: 'opacity,transform',

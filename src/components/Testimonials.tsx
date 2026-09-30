@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { TESTIMONIALS, type Testimonial } from '../data/content';
 
-const serif = "'The Seasons','Playfair Display',Georgia,serif";
 
 interface LoopItem extends Testimonial {
   dupe: boolean;
@@ -50,7 +49,7 @@ export function Testimonials() {
         border: '1px solid rgba(255,255,255,.07)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'clamp(24px,3vw,32px)',
+        gap: 24,
       }}
     >
       <div
@@ -78,7 +77,7 @@ export function Testimonials() {
         <h2
           id="testimonials-title"
           style={{
-            fontFamily: serif,
+            fontFamily: "'The Seasons'",
             fontSize: 'clamp(28px,3.4vw,38px)',
             lineHeight: 1.15,
             fontWeight: 700,
@@ -142,7 +141,7 @@ export function Testimonials() {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
-                  gap: 20,
+                  gap: 16,
                   padding: 28,
                   borderRadius: 22,
                   background: 'rgba(255,255,255,.025)',
