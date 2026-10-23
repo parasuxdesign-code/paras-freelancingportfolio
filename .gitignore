@@ -6,3 +6,4 @@ dist-ssr
 .wrangler
 
 *.tsbuildinfo
+vite.config.ts.timestamp*

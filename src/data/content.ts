@@ -1,230 +1,326 @@
-// All content data ported verbatim from the original DCLogic component.
+/**
+ * content.ts — all typed data for the redesigned portfolio.
+ * Keeping PROJECTS / SERVICE_CARDS / TESTIMONIALS arrays intact for legacy
+ * reference; only the newly-exported types are used by the new components.
+ */
 
-export interface NavItem {
-  id: string;
-  label: string;
-  href: string;
-}
+/* ─── Nav ─────────────────────────────────────────────────────────────────── */
+export interface NavItem { id: string; label: string; href: string }
 
-export interface Project {
+export const NAV_ITEMS: NavItem[] = [
+  { id: 'work',       label: 'Work',       href: '#work' },
+  { id: 'approach',   label: 'Approach',   href: '#approach' },
+  { id: 'experience', label: 'Experience', href: '#experience' },
+  { id: 'about',      label: 'About',      href: '#about' },
+  { id: 'contact',    label: 'Contact',    href: '#contact' },
+];
+
+/* ─── External links ──────────────────────────────────────────────────────── */
+export const LINKS = {
+  tally:     'https://tally.so/r/0QWL0B',
+  whatsapp:  'https://wa.me/919555164552',
+  linkedin:  'https://www.linkedin.com/in/paras-bhatnagar',
+  email:     'mailto:parasuxdesign@gmail.com',
+  resume:    '/Paras.Resume.pdf',
+  dribbble:  'https://dribbble.com/ParasUXD',
+  behance:   'https://www.behance.net/Paras_bhatnagra',
+  medium:    'https://medium.com/@parasbhatnagar',
+};
+
+/* ─── Featured projects (selected work section) ───────────────────────────── */
+export interface FeaturedProject {
   id: string;
-  ratio: number;
+  name: string;
+  description: string;
+  role: string;
+  domain: string;
   src: string;
   alt: string;
-}
-
-export interface ServiceCard {
-  icon: string; // /images/*.svg
-  title: string;
-  body: string;
-  delay: number;
-  gradient: string; // second gradient stop colour
-}
-
-export interface ProcessStep {
-  icon: string; // Material Symbols ligature
-  step: string;
-  title: string;
-  body: string;
-}
-
-export interface Principle {
-  icon: string; // Material Symbols ligature
-  title: string;
-  body: string;
-  delay: number;
-}
-
-export interface Testimonial {
-  quote: string;
-  quote2?: string;
-  name: string;
-  role?: string;
-  photo?: string;
-}
-
-export interface Social {
-  label: string;
+  tags: string[];
   href: string;
 }
 
-/* Navigation (header + mobile menu) --------------------------------------- */
-export const NAV_ITEMS: NavItem[] = [
-  { id: 'work', label: 'Work', href: '#work' },
-  { id: 'services', label: 'Services', href: '#services' },
-  { id: 'process', label: 'Process', href: '#process' },
-  { id: 'about', label: 'About', href: '#about' },
-  { id: 'testimonials', label: 'Testimonials', href: '#testimonials' },
-];
-
-/* External links used across the site ------------------------------------- */
-export const LINKS = {
-  tally: 'https://tally.so/r/0QWL0B',
-  whatsapp: 'https://wa.me/919555164552',
-  linkedin: 'www.linkedin.com/in/paras-bhatnagar',
-};
-
-/* Work gallery. ratio = shot width/height; card width derives from it. ---- */
-export const PROJECTS: Project[] = [
-  { id: 'work-01', ratio: 1.3333, src: '/images/work-01.png', alt: 'Project shot 1' },
-  { id: 'work-02', ratio: 1.3333, src: '/images/work-02.png', alt: 'Project shot 2' },
-  { id: 'work-03', ratio: 1.3333, src: '/images/work-03.png', alt: 'Project shot 3' },
-  { id: 'work-04', ratio: 1.3312, src: '/images/work-04.png', alt: 'Project shot 4' },
-  { id: 'work-05', ratio: 1.3333, src: '/images/work-05.png', alt: 'Project shot 5' },
-  { id: 'work-06', ratio: 1.3333, src: '/images/work-06.png', alt: 'Project shot 6' },
-  { id: 'work-07', ratio: 1.3333, src: '/images/work-07.png', alt: 'Project shot 7' },
-  { id: 'work-08', ratio: 1.3333, src: '/images/work-08.png', alt: 'Project shot 8' },
-  { id: 'work-09', ratio: 1.3333, src: '/images/work-09.png', alt: 'Project shot 9' },
-  { id: 'work-10', ratio: 1.3312, src: '/images/work-10.png', alt: 'Project shot 10' },
-  { id: 'work-11', ratio: 1.3333, src: '/images/work-11.png', alt: 'Project shot 11' },
-  { id: 'work-12', ratio: 1.3333, src: '/images/work-12.png', alt: 'Project shot 12' },
-  { id: 'work-13', ratio: 1.5, src: '/images/work-13.png', alt: 'Project shot 13' },
-  { id: 'work-14', ratio: 1.3333, src: '/images/work-14.png', alt: 'Project shot 14' },
-  { id: 'work-15', ratio: 1.3333, src: '/images/work-15.png', alt: 'Project shot 15' },
-  { id: 'work-16', ratio: 1.3333, src: '/images/work-16.png', alt: 'Project shot 16' },
-  { id: 'work-17', ratio: 1.3333, src: '/images/work-17.png', alt: 'Project shot 17' },
-];
-
-/* Services section cards (from the markup) -------------------------------- */
-export const SERVICE_CARDS: ServiceCard[] = [
+export const FEATURED_PROJECTS: FeaturedProject[] = [
   {
-    icon: '/images/svc-brand-family.svg',
-    title: 'Branding & Logo',
-    body: 'Build a distinct identity people remember.',
-    delay: 80,
-    gradient: 'rgb(169,65,145)',
+    id: 'connectx',
+    name: 'ConnectX',
+    description:
+      'Building a scalable product experience for modern banking — from product strategy to design system.',
+    role: 'Lead product designer',
+    domain: 'Fintech / Enterprise',
+    src: '/images/hero-connectx.png',
+    alt: 'NovaWorks (ConnectX) employee experience platform on laptop and mobile',
+    tags: ['Product design', 'Design systems', 'Fintech', 'Leadership'],
+    href: '#work',
   },
   {
-    icon: '/images/svc-devices.svg',
-    title: 'Product Design',
-    body: 'End-to-end product design across web, mobile, and desktop.',
-    delay: 150,
-    gradient: 'rgb(65,169,79)',
+    id: 'tol',
+    name: 'TOL — Trading online',
+    description:
+      'Making European institutional investing easier to understand and easier to act on.',
+    role: 'Product designer',
+    domain: 'Investment / SaaS',
+    src: '/images/work-09.png',
+    alt: 'TOL trading platform interface',
+    tags: ['Product design', 'Investment', 'European banking'],
+    href: '#work',
   },
   {
-    icon: '/images/svc-dashboard.svg',
-    title: 'Design Systems',
-    body: 'Create scalable systems that keep products consistent',
-    delay: 220,
-    gradient: 'rgb(169,147,65)',
-  },
-  {
-    icon: '/images/svc-interests.svg',
-    title: 'Social & Marketing Design',
-    body: 'Engaging visuals for social media and marketing campaigns.',
-    delay: 290,
-    gradient: 'rgb(42,118,184)',
-  },
-  {
-    icon: '/images/svc-code-blocks.svg',
-    title: 'No Code Development',
-    body: 'Turn designs into responsive, functional experiences',
-    delay: 360,
-    gradient: 'rgb(184,111,42)',
+    id: 'pangea',
+    name: 'Pangea',
+    description:
+      'A more human way to communicate across languages — AI-powered and built for real people.',
+    role: 'Product designer',
+    domain: 'Consumer / AI',
+    src: '/images/work-02.png',
+    alt: 'Pangea communication app interface',
+    tags: ['Product design', 'AI', 'Consumer'],
+    href: '#work',
   },
 ];
 
-/* Icon offset overrides so each SVG sits exactly as in the source ---------- */
-export const SERVICE_ICON_STYLE: Record<string, React.CSSProperties> = {
-  '/images/svc-brand-family.svg': { left: 2.667, top: 2.667, width: 26, height: 26.667 },
-  '/images/svc-devices.svg': { left: 2.667, top: 5.333, width: 26.667, height: 21.333 },
-  '/images/svc-dashboard.svg': { left: 4, top: 4, width: 24, height: 24 },
-  '/images/svc-interests.svg': { left: 3.615, top: 3.333, width: 25.718, height: 24.667 },
-  '/images/svc-code-blocks.svg': { left: 4, top: 4, width: 24, height: 24 },
-};
+/* ─── Credibility companies ───────────────────────────────────────────────── */
+export const CREDIBILITY_COMPANIES = ['Pangea', 'ION', 'Punchh', 'Compunnel Digital'];
 
-/* Process steps ----------------------------------------------------------- */
-export const PROCESS_STEPS: ProcessStep[] = [
+/* ─── Design approach principles ─────────────────────────────────────────── */
+export interface ApproachPrinciple { icon: string; title: string; body: string }
+
+export const APPROACH_PRINCIPLES: ApproachPrinciple[] = [
   {
-    icon: 'travel_explore',
-    step: 'STEP 01',
-    title: 'Understand',
-    body: 'I start by deeply understanding your brand, audience and goals, uncovering the insights that guide every decision that follows.',
+    icon: 'hub',
+    title: 'Make complexity feel simple',
+    body: "The best product experiences don't hide complexity — they make it understandable. Clarity is a design outcome.",
   },
   {
-    icon: 'draw',
-    step: 'STEP 02',
-    title: 'Design',
-    body: 'I craft purposeful work that balances beauty and function, whether it is product UI, a design system or a brand, always aligned to your vision.',
+    icon: 'grid_view',
+    title: 'Design for the system',
+    body: 'Good design scales beyond a single screen. I think in patterns, relationships and systems that hold up over time.',
   },
   {
-    icon: 'rocket_launch',
-    step: 'STEP 03',
-    title: 'Deliver',
-    body: 'I ship high quality, documented outputs and refine through feedback loops so the final work holds up in the hands of your team.',
+    icon: 'groups',
+    title: 'Bring people into the process',
+    body: 'Strong products are built together. I work closely with product, engineering and researchers to create clarity and momentum.',
+  },
+  {
+    icon: 'diamond',
+    title: 'Raise the bar',
+    body: "Whether it's a single interaction or a whole product, the quality of the final experience matters. Craft is not optional.",
   },
 ];
 
-/* About principles -------------------------------------------------------- */
-export const PRINCIPLES: Principle[] = [
-  { icon: 'psychology', title: 'Product Mindset', body: 'I think beyond the UI and focus on the bigger picture — user, business and technology.', delay: 0 },
-  { icon: 'route', title: 'End to End Ownership', body: 'From research and wireframes to UI and handoff, I take full ownership.', delay: 80 },
-  { icon: 'grid_view', title: 'Design Systems', body: 'I build scalable systems that help teams move faster and stay consistent.', delay: 160 },
-  { icon: 'groups', title: 'Collaborative Partner', body: 'I work closely with product, engineering and stakeholders as a true design partner.', delay: 240 },
-];
+/* ─── Leadership capabilities ─────────────────────────────────────────────── */
+export interface LeadershipCapability { icon: string; title: string; body: string }
 
-/* Testimonials ------------------------------------------------------------ */
-export const TESTIMONIALS: Testimonial[] = [
+export const LEADERSHIP_CAPABILITIES: LeadershipCapability[] = [
   {
-    quote:
-      'Paras introduced design best practices to our team as Figma capabilities continued to evolve, and helped ensure consistency and scalability across our product. His work brought clarity and structure to how design was created, maintained, and shared within the team.',
-    quote2:
-      'I appreciated his thoughtful approach to building systems that support long-term product development and team efficiency.',
-    name: 'Matthew Tormey',
-    role: 'ION',
-    photo: '/images/testimonial-01.jpg',
+    icon: 'north_star',
+    title: 'Direction',
+    body: 'Setting a clear design vision and rallying people around what we are solving and why.',
   },
   {
-    quote:
-      'Paras has a keen eye for UI design and brings a thoughtful, detail-oriented approach that elevates the overall product experience. Through our work together, he consistently contributed with clarity and intent\u2014whether it was defining visual patterns, aligning on market scenarios, or refining flows\u2014while also fostering open, collaborative discussions that helped shape strong design decisions. I also really appreciated how approachable and supportive he was, making it easy for me to adapt to a new work environment and patiently helping me navigate and resolve any doubts I had along the way.',
-    quote2:
-      'I\u2019ve really valued working with him and would highly recommend him to teams looking for a designer who brings strong intent, ownership, and a collaborative approach to their work.',
-    name: 'Avni Agarwal',
-    role: 'Bosh',
-    photo: '/images/t-avni.jpg',
+    icon: 'school',
+    title: 'Mentorship',
+    body: 'Helping designers grow their craft, product thinking and confidence.',
   },
   {
-    quote:
-      'Paras is very experienced and knowledgeable about product design. Even if there was any uncertainty in the design process, he would always take to initiative to research and find the answers and he was not afraid of taking risks to break barriers',
-    quote2:
-      'I would be glad to work with him again without hesitation and he would be a valuable asset to any organization that aims to elevate their design experience.',
-    name: 'Wei-Te Shyu',
-    role: 'American Express',
-    photo: '/images/t-weite.jpg',
+    icon: 'account_tree',
+    title: 'Systems',
+    body: 'Building frameworks and patterns that make quality repeatable at scale.',
   },
   {
-    quote:
-      'One of the qualities that truly sets Paras apart is his ability to collaborate effectively with cross-functional teams. He have the skills, experience, and passion to make a significant impact on any design team and drive the success of any product. It has been a privilege to work with Paras, and I have no doubt that his future endeavours will be filled with continued success.',
-    name: 'Kailash Singh',
-    role: 'Numarah',
-    photo: '/images/t-kailash.jpg',
-  },
-  {
-    quote:
-      'He handled numerous task streams independently, demonstrating excellent Design Thinking concepts, extensive research and analytical skills, and scenario-driven creative thinking. He provided a solutions-oriented approach, questioned project leadership\u2019s thinking, and created ideas, which he finally presented to stakeholders. I would work with him again without question, and I am confident that he will go on to lead and achieve great things in his profession',
-    name: 'Pankaj Dargan',
-    role: 'InfoPro',
-    photo: '/images/t-pankaj.jpg',
-  },
-  {
-    quote:
-      'Paras is an exceptionally talented designer with a keen eye for detail and a passion for creating stunning visuals. They consistently delivered high-quality designs that exceeded client expectations. Their collaboration skills, work ethic, and positive attitude make him a true professional. I highly recommend Paras',
-    name: 'Nikita Sharma',
-    role: 'PAR Tech',
-    photo: '/images/t-nikita.jpg',
-  },
-  {
-    quote:
-      'He is one of the most collaborative designers I have worked with throughout my entire career. I presented many complicated client use-cases to Paras which he handled flawlessly, always producing the best possible mock up in preparation for our next meeting together. I could always trust we would produce quality work and would appreciate the opportunity to chat with anyone who would like to learn more about Paras.',
-    name: 'Daniel Atwood',
-    role: 'Punchh',
-    photo: '/images/t-daniel.jpg',
+    icon: 'handshake',
+    title: 'Collaboration',
+    body: 'Bringing product, engineering and design into genuine alignment around the user problem.',
   },
 ];
 
-/* Footer socials ---------------------------------------------------------- */
+/* ─── Career experience ───────────────────────────────────────────────────── */
+export interface ExperienceItem {
+  period: string;
+  company: string;
+  role: string;
+  description: string;
+  active?: boolean;
+  isEarlier?: boolean;
+}
+
+export const EXPERIENCE_ITEMS: ExperienceItem[] = [
+  {
+    period: 'Apr 2026 — Present',
+    company: 'Pangea',
+    role: 'Principal product designer',
+    description:
+      'Leading product, UX and visual design at Pangea — a travel platform for exploring the world together. Working remotely across the full product lifecycle to shape the future of social travel.',
+    active: true,
+  },
+  {
+    period: '2024 — Mar 2026',
+    company: 'ION',
+    role: 'Lead product designer',
+    description:
+      'Led design for ConnectX, an internal tool to provide next-generation employee experience. Set the design vision, mentored the team, and worked closely with product and engineering to deliver at scale.',
+  },
+  {
+    period: '2022 — 2024',
+    company: 'ION',
+    role: 'Senior product designer',
+    description:
+      'Owned end-to-end design across financial products — conducting research, designing and iterating on features, collaborating with cross-functional teams, and mentoring junior designers.',
+  },
+  {
+    period: 'Earlier',
+    company: 'ION · Punchh · Compunnel',
+    role: '',
+    description: '',
+    isEarlier: true,
+  },
+];
+
+/* ─── Footer socials ──────────────────────────────────────────────────────── */
+export interface Social { label: string; href: string }
+
 export const SOCIALS: Social[] = [
+  { label: 'LinkedIn', href: LINKS.linkedin },
+  { label: 'Email',    href: LINKS.email },
+  { label: 'Résumé',  href: LINKS.resume },
+];
+
+/* ─── Legacy: work gallery (kept so buildRows.ts still compiles) ───────────── */
+export interface Project { id: string; ratio: number; src: string; alt: string }
+
+export const PROJECTS: Project[] = [
+  { id: 'work-01',  ratio: 1.3333, src: '/images/work-01.png',  alt: 'Project 1'  },
+  { id: 'work-02',  ratio: 1.3333, src: '/images/work-02.png',  alt: 'Project 2'  },
+  { id: 'work-03',  ratio: 1.3333, src: '/images/work-03.png',  alt: 'Aristotle — Case Library interface for University of Milan'  },
+  { id: 'work-04',  ratio: 1.3312, src: '/images/work-04.png',  alt: 'Project 4'  },
+  { id: 'work-05',  ratio: 1.3333, src: '/images/work-05.png',  alt: 'Project 5'  },
+  { id: 'work-06',  ratio: 1.3333, src: '/images/work-06.png',  alt: 'Project 6'  },
+  { id: 'work-07',  ratio: 1.3333, src: '/images/work-07.png',  alt: 'Project 7'  },
+  { id: 'work-08',  ratio: 1.3333, src: '/images/work-08.png',  alt: 'Project 8'  },
+  { id: 'work-09',  ratio: 1.3333, src: '/images/work-09.png',  alt: 'Project 9'  },
+  { id: 'work-10',  ratio: 1.3312, src: '/images/work-10.png',  alt: 'Project 10' },
+  { id: 'work-11',  ratio: 1.3333, src: '/images/work-11.png',  alt: 'Project 11' },
+  { id: 'work-12',  ratio: 1.3333, src: '/images/work-12.png',  alt: 'Project 12' },
+  { id: 'work-13',  ratio: 1.5,    src: '/images/work-13.png',  alt: 'Project 13' },
+  { id: 'work-14',  ratio: 1.3333, src: '/images/work-14.png',  alt: 'Project 14' },
+  { id: 'work-15',  ratio: 1.3333, src: '/images/work-15.png',  alt: 'Project 15' },
+  { id: 'work-16',  ratio: 1.3333, src: '/images/work-16.png',  alt: 'Project 16' },
+  { id: 'work-17',  ratio: 1.3333, src: '/images/work-17.png',  alt: 'Project 17' },
+];
+
+/* ─── Legacy: service cards / process steps / testimonials (kept intact) ─── */
+export interface ServiceCard {
+  icon: string; title: string; desc: string; tags: string[]
+}
+export const SERVICE_CARDS: ServiceCard[] = [
+  { icon: 'palette', title: 'Brand & Identity', desc: 'Logos, visual systems and brand guidelines.', tags: ['Logo', 'Visual identity', 'Brand guidelines'] },
+  { icon: 'devices', title: 'Product Design', desc: 'End-to-end UX/UI for web and mobile products.', tags: ['UX', 'UI', 'Mobile', 'Web'] },
+  { icon: 'hub',     title: 'Design Systems', desc: 'Scalable component libraries and token frameworks.', tags: ['Components', 'Tokens', 'Figma'] },
+  { icon: 'photo_camera', title: 'Social & Content', desc: 'Templates, motion and social-ready assets.', tags: ['Social', 'Motion', 'Templates'] },
+  { icon: 'code',    title: 'No-Code Builds', desc: 'Webflow, Framer and other no-code platforms.', tags: ['Webflow', 'Framer'] },
+];
+
+export interface ProcessStep { number: string; title: string; desc: string }
+export const PROCESS_STEPS: ProcessStep[] = [
+  { number: '01', title: 'Understand', desc: 'Deep dive into the problem, users and business context.' },
+  { number: '02', title: 'Design',     desc: 'Explore, prototype and refine until the solution is clear.' },
+  { number: '03', title: 'Deliver',    desc: 'Ship with precision: handoff, QA and iteration.' },
+];
+
+export interface Principle { icon: string; title: string; body: string }
+export const PRINCIPLES: Principle[] = [
+  { icon: 'memory',  title: 'Product mindset',        body: 'Design decisions grounded in real user needs and business outcomes.' },
+  { icon: 'hub',     title: 'End-to-end ownership',   body: 'From early concepts through to polished, shipped experiences.' },
+  { icon: 'grid_view', title: 'Design systems',       body: 'Scalable patterns and components that accelerate teams.' },
+  { icon: 'groups',  title: 'Collaborative partner',  body: 'Working closely with product and engineering from day one.' },
+];
+
+export interface Testimonial {
+  quote: string; name: string; title: string; company: string; avatar?: string
+}
+export const TESTIMONIALS: Testimonial[] = [
+  { quote: "Paras is one of the most thoughtful designers I've worked with. He has a rare ability to understand complex product problems and translate them into elegant, intuitive solutions.", name: 'Matthew Tormey', title: 'Product Director', company: 'ION' },
+  { quote: "Working with Paras was a game-changer for our product team. His ability to simplify complex workflows while maintaining a beautiful aesthetic is impressive.", name: 'Avni Agarwal', title: 'Product Manager', company: 'Bosh' },
+  { quote: "Paras brings a perfect blend of strategic thinking and pixel-level craftsmanship. He elevated our entire design process.", name: 'Wei-Te Shyu', title: 'Senior UX Designer', company: 'American Express' },
+  { quote: "His work on our design system alone saved us months of development time. Paras thinks in systems.", name: 'Kailash Singh', title: 'CTO', company: 'Numarah' },
+  { quote: "Paras delivered not just designs, but a complete design language that our team could build upon for years.", name: 'Pankaj Dargan', title: 'Head of Product', company: 'InfoPro Digital' },
+  { quote: "He has an exceptional eye for detail while never losing sight of the big picture. Truly a senior-level designer.", name: 'Nikita Sharma', title: 'Product Manager', company: 'PAR Technology' },
+  { quote: "Paras transformed our product UX completely. User satisfaction scores improved dramatically after his redesign.", name: 'Daniel Atwood', title: 'VP of Product', company: 'Punchh' },
+];
+
+export const SOCIALS_LEGACY = [
   { label: 'LinkedIn', href: '#contact' },
   { label: 'Dribbble', href: '#contact' },
-  { label: 'Behance', href: '#contact' },
+  { label: 'Behance',  href: '#contact' },
+];
+
+/* ─── Work widget entries (About section) ─────────────────────────────────── */
+export interface WorkEntry {
+  id: string;
+  company: string;
+  role: string;
+  /** Display string, e.g. "Apr 2026 – Present" */
+  period: string;
+  /** Display string, e.g. "6 mos" */
+  duration: string;
+  /** Avatar placeholder color (hex) — replaced by logo once uploaded */
+  color: string;
+  /** Set to '/logos/<file>' once logos are added to public/ */
+  logo?: string;
+}
+
+export const WORK_ENTRIES: WorkEntry[] = [
+  {
+    id: 'pangea',
+    company: 'Pangea',
+    logo: '/logos/pangea.jpg',
+    role: 'Principal Product Designer',
+    period: 'Apr 2026 – Present',
+    duration: '6 mos',
+    color: '#059669',
+  },
+  {
+    id: 'ion',
+    company: 'ION',
+    logo: '/logos/ion.jpg',
+    role: 'Lead Product Designer',
+    period: 'Oct 2019 – Mar 2026',
+    duration: '6 yrs 5 mos',
+    color: '#D97706',
+  },
+  {
+    id: 'punchh',
+    company: 'Punchh',
+    logo: '/logos/punchh.jpg',
+    role: 'UX Designer',
+    period: '2018 – 2022',
+    duration: '4 yrs',
+    color: '#DC2626',
+  },
+  {
+    id: 'compunnel',
+    company: 'Compunnel Digital',
+    logo: '/logos/compunnel.jpg',
+    role: 'UI/UX Designer',
+    period: '2014 – 2018',
+    duration: '4 yrs',
+    color: '#2563EB',
+  },
+];
+
+/* ─── About section social links ──────────────────────────────────────────── */
+export type SocialIconType = 'x' | 'instagram' | 'linkedin' | 'youtube';
+
+export interface AboutSocial {
+  id: string;
+  label: string;
+  href: string;
+  icon: SocialIconType;
+}
+
+export const ABOUT_SOCIALS: AboutSocial[] = [
+  { id: 'x',         label: 'X (Twitter)', href: '#',                                           icon: 'x' },
+  { id: 'instagram', label: 'Instagram',   href: 'https://www.instagram.com/panipanioriginals', icon: 'instagram' },
+  { id: 'linkedin',  label: 'LinkedIn',    href: 'https://www.linkedin.com/in/paras-bhatnagar', icon: 'linkedin' },
+  { id: 'youtube',   label: 'YouTube',     href: '#',                                           icon: 'youtube' },
 ];

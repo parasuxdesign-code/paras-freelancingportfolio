@@ -1,279 +1,189 @@
-import { useRef } from 'react';
-import { TESTIMONIALS, type Testimonial } from '../data/content';
+import { useEffect, useRef } from 'react';
+import { TESTIMONIALS } from '../data/content';
 
+// Curated — 3 strongest voices, representing different contexts
+const SELECTED_NAMES = ['Matthew Tormey', 'Wei-Te Shyu', 'Daniel Atwood'];
 
-interface LoopItem extends Testimonial {
-  dupe: boolean;
-  fade: string;
-  initials: string;
+const AVATAR_MAP: Record<string, string> = {
+  'Matthew Tormey': '/images/testimonial-01.jpg',
+  'Wei-Te Shyu':    '/images/t-weite.jpg',
+  'Daniel Atwood':  '/images/t-daniel.jpg',
+};
+
+function initials(name: string) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
 }
 
-// Mirrors DCLogic testimonialsLoop: the list is concatenated with itself for a
-// seamless CSS marquee; long quotes get a bottom fade mask.
-const LOOP: LoopItem[] = TESTIMONIALS.concat(TESTIMONIALS).map((t, i) => ({
-  ...t,
-  dupe: i >= TESTIMONIALS.length,
-  fade:
-    (t.quote.length + (t.quote2 || '').length) > 500
-      ? 'linear-gradient(180deg,#000 78%,transparent)'
-      : 'none',
-  initials: t.name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join(''),
-}));
-
 export function Testimonials() {
-  const trackRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
+  const selected = TESTIMONIALS.filter(t => SELECTED_NAMES.includes(t.name));
 
-  const setPaused = (paused: boolean) => {
-    const row = trackRef.current?.querySelector<HTMLElement>('[data-tmarquee]');
-    if (row) row.style.animationPlayState = paused ? 'paused' : 'running';
-  };
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const cards = el.querySelectorAll<HTMLElement>('.tc');
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => { if (e.isIntersecting) (e.target as HTMLElement).classList.add('is-visible'); });
+      },
+      { threshold: 0.1 }
+    );
+    cards.forEach(c => obs.observe(c));
+    return () => obs.disconnect();
+  }, []);
 
   return (
-    <section
-      id="testimonials"
-      aria-labelledby="testimonials-title"
-      data-screen-label="Testimonials"
-      style={{
-        maxWidth: 1240,
-        width: '100%',
-        margin: 'clamp(24px,3vw,40px) auto',
-        padding: 'clamp(40px,5vw,56px) clamp(28px,4vw,48px)',
-        background:
-          'linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012))',
-        borderRadius: 32,
-        border: '1px solid rgba(255,255,255,.07)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 24,
-      }}
-    >
-      <div
-        data-reveal="1"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 12,
-          opacity: 0,
-          transform: 'translateY(14px)',
-          transition:
-            'opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)',
-        }}
-      >
-        <span
-          style={{
-            fontSize: 20,
-            fontWeight: 500,
-            lineHeight: '28px',
-            color: '#90E02E',
-          }}
-        >
-          Testimonials
-        </span>
-        <h2
-          id="testimonials-title"
-          style={{
-            fontFamily: "'The Seasons'",
-            fontSize: 'clamp(28px,3.4vw,38px)',
-            lineHeight: 1.15,
-            fontWeight: 700,
-            maxWidth: '22ch',
-            textWrap: 'pretty',
-          }}
-        >
-          Kind words from amazing people
-        </h2>
-      </div>
+    <section className="testimonials section" id="testimonials" ref={ref} aria-labelledby="testimonials-heading">
+      <div className="container">
+        <div className="testimonials__header">
+          <p className="section-label">People I've worked with</p>
+          <h2 className="testimonials__headline" id="testimonials-heading">
+            What collaborators say.
+          </h2>
+        </div>
 
-      <div
-        data-reveal="1"
-        data-delay="80"
-        style={{
-          minWidth: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 16,
-          opacity: 0,
-          transform: 'translateY(14px)',
-          transition:
-            'opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)',
-        }}
-      >
-        <div
-          ref={trackRef}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          style={{
-            position: 'relative',
-            overflow: 'hidden',
-            margin: '0 -4px',
-            padding: 4,
-            WebkitMask:
-              'linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)',
-            mask: 'linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)',
-          }}
-        >
-          <ul
-            data-tmarquee="1"
-            style={{
-              listStyle: 'none',
-              margin: 0,
-              padding: 0,
-              display: 'flex',
-              alignItems: 'stretch',
-              gap: 16,
-              width: 'max-content',
-              animation: 'om-tscroll 68s linear infinite',
-            }}
-          >
-            {LOOP.map((t, i) => (
-              <li
-                key={`${t.name}-${i}`}
-                aria-hidden={t.dupe || undefined}
-                style={{
-                  flex: '0 0 min(440px,calc(100vw - 72px))',
-                  width: 'min(440px,calc(100vw - 72px))',
-                  height: 380,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  gap: 16,
-                  padding: 28,
-                  borderRadius: 22,
-                  background: 'rgba(255,255,255,.025)',
-                  border: '1px solid rgba(255,255,255,.07)',
-                }}
+        <div className="testimonials__grid" role="list">
+          {selected.map((t, i) => {
+            const avatar = AVATAR_MAP[t.name];
+            return (
+              <article
+                key={t.name}
+                className="tc"
+                role="listitem"
+                style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <span
-                  aria-hidden="true"
-                  style={{ fontSize: 22, lineHeight: 0.8, color: '#5E8F32' }}
-                >
-                  &ldquo;
-                </span>
-                <blockquote
-                  style={{
-                    margin: 0,
-                    flex: '0 0 auto',
-                    height: 214,
-                    overflow: 'hidden',
-                    WebkitMask: t.fade,
-                    mask: t.fade,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 12,
-                    fontSize: 14,
-                    lineHeight: 1.7,
-                    color: '#C1C3CD',
-                  }}
-                >
-                  <span>{t.quote}</span>
-                  {t.quote2 && <span style={{ color: '#9EA0AD' }}>{t.quote2}</span>}
+                <blockquote className="tc__quote">
+                  <p>"{t.quote}"</p>
                 </blockquote>
-                <figcaption
-                  style={{
-                    paddingTop: 4,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 12,
-                  }}
-                >
-                  {t.photo ? (
-                    <span
-                      role="img"
-                      aria-label={t.name}
-                      style={{
-                        flex: 'none',
-                        width: 40,
-                        height: 40,
-                        borderRadius: '50%',
-                        border: '1px solid rgba(255,255,255,.12)',
-                        backgroundImage: `url(${t.photo})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundColor: '#14161D',
-                      }}
-                    />
-                  ) : (
-                    <span
-                      aria-hidden="true"
-                      style={{
-                        flex: 'none',
-                        display: 'grid',
-                        placeItems: 'center',
-                        width: 40,
-                        height: 40,
-                        borderRadius: '50%',
-                        border: '1px solid rgba(121,210,8,.25)',
-                        background: 'rgba(121,210,8,.1)',
-                        color: '#A6E85C',
-                        fontSize: 14,
-                        fontWeight: 600,
-                      }}
-                    >
-                      {t.initials}
-                    </span>
-                  )}
-                  <span
-                    style={{
-                      flex: 1,
-                      minWidth: 0,
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    <span
-                      style={{ fontSize: 13, fontWeight: 600, color: '#F2F3F7' }}
-                    >
-                      {t.name}
-                    </span>
-                    {t.role && (
-                      <span style={{ fontSize: 12, color: '#7A7C88' }}>
-                        {t.role}
-                      </span>
-                    )}
-                  </span>
-                  <a
-                    href="https://www.linkedin.com/"
-                    target="_blank"
-                    rel="noopener"
-                    aria-label="View profile on LinkedIn"
-                    className="tlink"
-                    tabIndex={t.dupe ? -1 : undefined}
-                    style={{
-                      flex: 'none',
-                      display: 'grid',
-                      placeItems: 'center',
-                      width: 28,
-                      height: 28,
-                      borderRadius: 8,
-                      background: 'rgba(255,255,255,.04)',
-                      border: '1px solid rgba(255,255,255,.09)',
-                      color: '#8A8C99',
-                      transition:
-                        'color 260ms ease,border-color 260ms ease,background 260ms ease',
-                    }}
-                  >
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 24 24"
-                      width="14"
-                      height="14"
-                      fill="currentColor"
-                      style={{ display: 'block' }}
-                    >
-                      <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM2.9 21.5h4.16V9.4H2.9v12.1ZM9.6 9.4h3.98v1.65h.06c.55-1.02 1.9-2.1 3.92-2.1 3.2 0 3.94 2 3.94 5.03v7.52h-4.15v-6.67c0-1.59-.29-2.98-2.05-2.98-1.7 0-2.05 1.28-2.05 2.9v6.75H9.6V9.4Z" />
-                    </svg>
-                  </a>
-                </figcaption>
-              </li>
-            ))}
-          </ul>
+                <footer className="tc__footer">
+                  <div className="tc__avatar" aria-hidden="true">
+                    {avatar
+                      ? <img src={avatar} alt={t.name} loading="lazy" />
+                      : <span className="tc__initials">{initials(t.name)}</span>
+                    }
+                  </div>
+                  <div className="tc__meta">
+                    <span className="tc__name">{t.name}</span>
+                    <span className="tc__role">{t.title}</span>
+                    <span className="tc__company">{t.company}</span>
+                  </div>
+                </footer>
+              </article>
+            );
+          })}
         </div>
       </div>
+
+      <style>{`
+        .testimonials {
+          background: var(--bg-subtle);
+        }
+
+        .testimonials__header {
+          margin-bottom: 48px;
+        }
+        .testimonials__headline {
+          font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+          font-weight: 800;
+          letter-spacing: -0.045em;
+          line-height: 1.1;
+          color: var(--text-primary);
+          margin-top: 10px;
+        }
+
+        .testimonials__grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+
+        .tc {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 28px;
+          padding: 32px;
+          background: var(--bg-surface);
+          border: 1px solid var(--border);
+          border-radius: var(--r-xl);
+          opacity: 0;
+          transform: translateY(16px);
+          transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .tc.is-visible { opacity: 1; transform: none; }
+
+        .tc__quote {
+          margin: 0;
+          flex: 1;
+        }
+        .tc__quote p {
+          font-size: 1rem;
+          line-height: 1.7;
+          color: var(--text-secondary);
+          letter-spacing: -0.01em;
+          margin: 0;
+        }
+
+        .tc__footer {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding-top: 24px;
+          border-top: 1px solid var(--border-subtle, var(--border));
+        }
+
+        .tc__avatar {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          overflow: hidden;
+          flex-shrink: 0;
+          background: var(--bg-inset);
+        }
+        .tc__avatar img {
+          width: 100%; height: 100%; object-fit: cover;
+        }
+        .tc__initials {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%; height: 100%;
+          font-size: 0.8125rem;
+          font-weight: 700;
+          color: var(--accent);
+          background: color-mix(in srgb, var(--accent) 12%, transparent);
+        }
+
+        .tc__meta {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          min-width: 0;
+        }
+        .tc__name {
+          font-size: 0.875rem;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          color: var(--text-primary);
+        }
+        .tc__role {
+          font-size: 0.75rem;
+          color: var(--text-secondary);
+          font-weight: 500;
+        }
+        .tc__company {
+          font-size: 0.6875rem;
+          color: var(--text-tertiary);
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+          font-weight: 600;
+        }
+
+        @media (max-width: 900px) {
+          .testimonials__grid { grid-template-columns: 1fr; gap: 16px; }
+          .tc { padding: 24px; }
+        }
+      `}</style>
     </section>
   );
 }

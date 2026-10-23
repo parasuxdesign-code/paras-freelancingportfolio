@@ -1,11 +1,10 @@
 import { useEffect, type RefObject } from 'react';
 
-const SECTIONS = ['work', 'services', 'process', 'about', 'testimonials'];
+const SECTIONS = ['work', 'approach', 'experience', 'about', 'contact'];
 
 /**
- * Ports DCLogic.onScroll + paintDot: shifts the floating nav to its "scrolled"
- * surface past 24px, and lights the active section's nav link + underline dot
- * via scroll-spy. Values match the source exactly.
+ * Scroll-spy: shifts the floating nav to its "scrolled" surface past 24 px,
+ * and lights the active section's nav link + underline dot.
  */
 export function useScrollSpy(navRef: RefObject<HTMLElement>): void {
   useEffect(() => {

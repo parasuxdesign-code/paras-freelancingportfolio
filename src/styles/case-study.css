@@ -1,0 +1,217 @@
+/* ============================================================
+   CASE STUDY — shared layout & component styles
+   Scope: .case-study
+   ============================================================ */
+
+.case-study {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-primary);
+}
+
+/* ── Hero — clears fixed pill nav ── */
+.cs-hero {
+  padding-top: calc(var(--header-h) + clamp(40px, 5vw, 72px));
+  padding-bottom: clamp(40px, 5vw, 72px);
+}
+.cs-hero__inner { /* uses .container's max-width; no override needed */ }
+.cs-hero__meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.cs-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 9999px;
+  padding: 4px 12px;
+}
+.cs-hero__title {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-bottom: 20px;
+}
+.cs-hero__subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+.cs-hero__details {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.cs-detail { display: flex; flex-direction: column; gap: 4px; }
+.cs-detail__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.cs-detail__value {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ── Cover image ── */
+.cs-cover { padding-block: 0 clamp(48px, 5vw, 80px); }
+.cs-cover__img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--r-2xl);
+  border: 1px solid var(--border);
+  display: block;
+}
+
+/* ── Body — editorial single column ── */
+.cs-body { padding-block: clamp(48px, 5vw, 80px); }
+.cs-body__inner { /* block — no grid */ }
+
+.cs-prose { max-width: 660px; }
+.cs-prose h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  margin-top: 48px;
+}
+.cs-prose h2:first-child { margin-top: 0; }
+.cs-prose p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+.cs-prose ul { margin: 0 0 20px 20px; }
+.cs-prose ul li {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+/* ── Sidebar — image gallery below prose ── */
+.cs-sidebar { margin-top: 56px; }
+.cs-work-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.cs-work-grid img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  display: block;
+}
+
+/* ── CTA ── */
+.cs-cta {
+  padding-block: clamp(64px, 7vw, 104px);
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+}
+.cs-cta__inner { text-align: center; }
+.cs-cta__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.cs-cta__title {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 32px;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: var(--r-md);
+  padding: 12px 24px;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn--primary { background: var(--text-primary); color: var(--bg); }
+.btn--primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+/* ── Prev / Next project nav ── */
+.cs-nav-projects {
+  padding-block: clamp(40px, 4vw, 64px);
+  border-top: 1px solid var(--border);
+}
+.cs-nav-projects__inner {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Shared card styles */
+.cs-next,
+.cs-prev {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-decoration: none;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--bg-surface);
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-width: 180px;
+}
+.cs-prev { align-items: flex-start; margin-right: auto; }
+.cs-next { align-items: flex-end; }
+.cs-next:hover, .cs-prev:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.cs-next__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.cs-next__name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.cs-next .material-symbols-rounded,
+.cs-prev .material-symbols-rounded {
+  font-size: 18px;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .cs-work-grid { grid-template-columns: 1fr 1fr; }
+  .cs-hero__details { gap: 24px; }
+  .cs-nav-projects__inner { flex-wrap: wrap; }
+  .cs-prev { margin-right: 0; }
+}

@@ -1,144 +1,77 @@
-import { useMemo, useRef, useState } from 'react';
-import { Nav } from './components/Nav';
-import { MobileMenu } from './components/MobileMenu';
+import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Intro } from './components/Intro';
+import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { AboutSection } from './components/AboutSection';
 import { Work } from './components/Work';
-import { Services } from './components/Services';
-import { Process } from './components/Process';
-import { About } from './components/About';
-import { Testimonials } from './components/Testimonials';
-import { ClosingCTA } from './components/ClosingCTA';
+import { AIProject } from './components/AIProject';
+import { ContactSection } from './components/ContactSection';
+import { ScrollToHash } from './components/ScrollToHash';
+import { Footer } from './components/Footer';
+import { WorkPage } from './pages/WorkPage';
+import { ConnectXCase } from './pages/work/ConnectXCase';
+import { TOLCase } from './pages/work/TOLCase';
+import { VeggieGrillCase } from './pages/work/VeggieGrillCase';
+import { AristotleCase } from './pages/work/AristotleCase';
+import { PangeaCase } from './pages/work/PangeaCase';
+import { PromotewallCase } from './pages/work/PromotewallCase';
+import { WaveDivider } from './components/WaveDivider';
+import './styles/case-study.css';
 
-import { PROJECTS } from './data/content';
-import { buildRows } from './data/buildRows';
-
-import { useReducedMotion } from './hooks/useReducedMotion';
-import { useViewportWidth } from './hooks/useViewportWidth';
-import { useReveal } from './hooks/useReveal';
-import { useScrollSpy } from './hooks/useScrollSpy';
-import { useMarquee } from './hooks/useMarquee';
-import { useProcessParallax } from './hooks/useProcessParallax';
-import { useSmoothScroll } from './hooks/useSmoothScroll';
-
-// Optional tuning knobs, mirroring the original DC component props.
-interface AppProps {
-  showStats?: boolean;
-  autoScroll?: boolean;
-  scrollSpeed?: number;
-  railHeight?: number;
-}
-
-export default function App({
-  showStats = true,
-  autoScroll = true,
-  scrollSpeed = 7,
-  railHeight = 360,
-}: AppProps) {
-  const reduced = useReducedMotion();
-  const width = useViewportWidth();
-  const isDesktop = width >= 900;
-
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const navRef = useRef<HTMLElement>(null);
-  const railRef = useRef<HTMLDivElement>(null);
-  const pausedRef = useRef(false);
-
-  // Row height shrinks on small screens (w < 640 -> 280), matching the source.
-  const rowHeight = width < 640 ? 280 : railHeight;
-  const rows = useMemo(() => buildRows(PROJECTS, rowHeight), [rowHeight]);
-
-  const { onNavClick, toTop } = useSmoothScroll(reduced, () =>
-    setMenuOpen(false)
-  );
-
-  useReveal(reduced);
-  useScrollSpy(navRef);
-  useMarquee(railRef, pausedRef, { reduced, autoScroll, scrollSpeed });
-  useProcessParallax(reduced);
+function HomePage() {
+  const [introComplete, setIntroComplete] = useState(false);
 
   return (
-    <div
-      style={{
-        width: '100%',
-        maxWidth: '100vw',
-        position: 'relative',
-        background: '#05050A',
-        overflow: 'hidden',
-      }}
-    >
-      {/* Ambient radial glows */}
-      <span
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: -191,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: 446,
-          height: 446,
-          pointerEvents: 'none',
-          borderRadius: '50%',
-          background:
-            'radial-gradient(50% 50% at 50% 50%,rgba(144,224,46,.45),rgba(144,224,46,0) 72%)',
-          filter: 'blur(60px)',
-        }}
-      />
-      <span
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: 1400,
-          right: -200,
-          width: 760,
-          height: 760,
-          pointerEvents: 'none',
-          background:
-            'radial-gradient(50% 50% at 50% 50%,rgba(70,150,10,.16),rgba(70,150,10,0) 70%)',
-        }}
-      />
+    <>
+      {!introComplete && (
+        <Intro onComplete={() => setIntroComplete(true)} />
+      )}
+      <div className={`site-content${introComplete ? ' site-content--visible' : ''}`}>
+        <Header />
+        <main id="main" tabIndex={-1}>
+          <Hero />
+          <WaveDivider />
+          <AboutSection />
+          <WaveDivider />
+          <Work />
+          <WaveDivider />
+          <AIProject />
+          <ContactSection />
+        </main>
+      </div>
+    </>
+  );
+}
 
-      <a href="#work" className="skip-link">
-        Skip to content
-      </a>
-
-      <Nav
-        navRef={navRef}
-        isDesktop={isDesktop}
-        menuOpen={menuOpen}
-        onToggleMenu={() => setMenuOpen((o) => !o)}
-        onNavClick={onNavClick}
-      />
-
-      <MobileMenu open={menuOpen} onNavClick={onNavClick} />
-
-      <main
-        id="top"
-        style={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 0,
-          gap: 0,
-        }}
-      >
-        <Hero showStats={showStats} />
-        <Work
-          railRef={railRef}
-          rows={rows}
-          onPause={() => {
-            pausedRef.current = true;
-          }}
-          onResume={() => {
-            pausedRef.current = false;
-          }}
-        />
-        <Services />
-        <Process />
-        <About />
-        <Testimonials />
-        <ClosingCTA onToTop={toTop} />
+function CaseStudyLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="site-content site-content--visible">
+      <Header />
+      <main id="main" tabIndex={-1}>
+        {children}
       </main>
+      <Footer />
     </div>
   );
 }
+
+function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToHash />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/work" element={<WorkPage />} />
+        <Route path="/work/connectx" element={<CaseStudyLayout><ConnectXCase /></CaseStudyLayout>} />
+        <Route path="/work/tol" element={<CaseStudyLayout><TOLCase /></CaseStudyLayout>} />
+        <Route path="/work/veggie-grill" element={<CaseStudyLayout><VeggieGrillCase /></CaseStudyLayout>} />
+        <Route path="/work/pangea" element={<CaseStudyLayout><PangeaCase /></CaseStudyLayout>} />
+        <Route path="/work/aristotle" element={<CaseStudyLayout><AristotleCase /></CaseStudyLayout>} />
+        <Route path="/work/promotewall" element={<CaseStudyLayout><PromotewallCase /></CaseStudyLayout>} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;

@@ -1,0 +1,607 @@
+/* ============================================================
+   VEGGIE GRILL CASE STUDY — page-specific layout styles
+   ============================================================ */
+
+/* ── Editorial body sections ── */
+.vg-section {
+  padding-top: clamp(56px, 6vw, 88px);
+}
+.vg-section:first-child {
+  padding-top: 0;
+}
+
+/* ── Prose ── */
+.vg-prose {
+  max-width: 680px;
+}
+.vg-prose h2 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  margin-top: 0;
+  color: var(--text-primary);
+}
+.vg-prose h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+.vg-prose p {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+.vg-prose ul {
+  list-style: disc;
+  margin: 0 0 20px 0;
+  padding-left: 22px;
+}
+.vg-prose ul li {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.vg-prose strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ── Kicker label above headings ── */
+.vg-kicker {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+/* ── Divider ── */
+.vg-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-block: clamp(56px, 6vw, 88px) 0;
+}
+
+/* ── Visual — full-width image block ── */
+.vg-visual {
+  margin-top: clamp(32px, 4vw, 52px);
+}
+.vg-img {
+  width: 100%;
+  display: block;
+  object-fit: contain;
+}
+.vg-img--rounded {
+  border-radius: var(--r-xl, 16px);
+  border: 1px solid var(--border);
+}
+.vg-img--shadow {
+  border-radius: var(--r-xl, 16px);
+  box-shadow: 0 2px 24px rgba(0,0,0,.07);
+}
+.vg-caption {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--text-tertiary);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* ── Platform badge row ── */
+.vg-platform-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: clamp(32px, 4vw, 48px);
+  padding: 20px 24px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl, 16px);
+}
+.vg-platform-row img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+.vg-platform-row__text {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.vg-platform-row__text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ── Wide visual — bleeds to container edge ── */
+.vg-visual--wide {
+  margin-top: clamp(32px, 4vw, 52px);
+  margin-inline: 0;
+}
+
+/* ── 30-sec overview banner ── */
+.vg-overview-card {
+  margin-top: clamp(40px, 5vw, 64px);
+  border-radius: var(--r-2xl, 20px);
+  overflow: hidden;
+}
+.vg-overview-card img {
+  width: 100%;
+  display: block;
+}
+
+/* ── Insight cards ── */
+.vg-insight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: clamp(28px, 3vw, 44px);
+}
+.vg-insight-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl, 16px);
+  padding: 20px 22px;
+}
+.vg-insight-card__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.vg-insight-card__text {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* ── Screen group — horizontally scrolling on mobile ── */
+.vg-screens {
+  margin-top: clamp(32px, 4vw, 52px);
+  display: flex;
+  gap: clamp(12px, 2vw, 20px);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 4px;
+}
+.vg-screens img {
+  flex: 0 0 auto;
+  width: clamp(200px, 30vw, 320px);
+  border-radius: var(--r-xl, 16px);
+  border: 1px solid var(--border);
+  scroll-snap-align: start;
+  display: block;
+}
+/* Hide scrollbar visually */
+.vg-screens::-webkit-scrollbar { height: 4px; }
+.vg-screens::-webkit-scrollbar-track { background: transparent; }
+.vg-screens::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 99px;
+}
+
+/* ── Flow diagram — wide, readable ── */
+.vg-flow {
+  margin-top: clamp(32px, 4vw, 52px);
+  border-radius: var(--r-xl, 16px);
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+.vg-flow img {
+  width: 100%;
+  display: block;
+}
+
+/* ── Outcome stat row ── */
+.vg-outcome-row {
+  display: flex;
+  gap: clamp(24px, 4vw, 48px);
+  flex-wrap: wrap;
+  margin-top: clamp(32px, 4vw, 48px);
+  padding: 28px 32px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl, 16px);
+}
+.vg-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.vg-stat__num {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+}
+.vg-stat__label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* ── Brand banner ── */
+.vg-brand-banner {
+  margin-top: clamp(40px, 5vw, 64px);
+  border-radius: var(--r-2xl, 20px);
+  overflow: hidden;
+}
+.vg-brand-banner img {
+  width: 100%;
+  display: block;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .vg-outcome-row {
+    gap: 20px;
+    padding: 20px;
+  }
+  .vg-platform-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   App screenshot carousel — Veggie Grill case study only
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.vg-carousel {
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.vg-carousel:active { cursor: grabbing; }
+
+.vg-carousel__track {
+  display: flex;
+  will-change: transform;
+}
+
+.vg-carousel__card {
+  flex: 0 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #111;
+}
+
+.vg-carousel__img {
+  width: 100%;
+  display: block;
+  border-radius: 24px;
+}
+
+.vg-carousel__placeholder {
+  width: 100%;
+  aspect-ratio: 9 / 19.5;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vg-carousel__placeholder span {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+  font-family: inherit;
+}
+
+.vg-carousel__dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  padding: 0 8px;
+}
+.vg-carousel__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255,255,255,0.18);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.vg-carousel__dot--active {
+  background: rgba(255,255,255,0.75);
+  transform: scale(1.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-carousel__track { transition: none !important; }
+  .vg-carousel__dot   { transition: none; }
+}
+
+/* Problem section image */
+.vg-problem-img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 16px;
+}
+
+/* Centered prose variant — used in problem section */
+.vg-prose--centered {
+  text-align: center;
+}
+
+/* ── Veggie Grill page overrides ── */
+
+/* Eyebrow labels: bump from 0.6875rem (11px) → 0.8125rem (13px), scoped to VG only */
+.vg-case-study .vg-kicker {
+  font-size: 0.8125rem;
+}
+
+.ar-showcase {
+  width: 100%;
+  padding-block: clamp(48px, 5vw, 72px);
+  /* No max-width — intentionally breaks out of the 860 px editorial container */
+}
+
+/* ── Aristotle carousel overrides ───────────────────────────────────────
+   16:9 showcase containers for desktop web-app screens.
+   Scoped to .ar-carousel so VeggieGrill is unaffected.
+─────────────────────────────────────────────────────────────────────── */
+.ar-carousel__card {
+  border-radius: 12px;
+  /* 16:9 outer shell — image sits inside with contain */
+  aspect-ratio: 16 / 9;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.ar-carousel__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 0;
+}
+.ar-carousel__placeholder {
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ar-carousel__placeholder span {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  font-family: inherit;
+  text-align: center;
+  padding: 0 16px;
+}
+.ar-placeholder {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+.ar-placeholder--wide {
+  aspect-ratio: 16 / 7;
+}
+.ar-placeholder span {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  font-family: inherit;
+  text-align: center;
+}
+
+/* ── Image placeholder ── */
+.vg-img-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--color-surface, #f3f3f1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-block: clamp(24px, 3vw, 40px);
+  border: 1.5px dashed var(--color-border, #d6d4ce);
+}
+
+.vg-img-placeholder span {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted, #9a9791);
+  letter-spacing: 0.02em;
+}
+
+
+/* ── Pangea DS: numbered steps ─────────────────────────────────────────────── */
+.vg-step {
+  display: flex;
+  gap: clamp(20px, 3vw, 36px);
+  margin-top: clamp(32px, 4vw, 48px);
+}
+.vg-step:first-of-type { margin-top: clamp(24px, 3vw, 36px); }
+.vg-step__num {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--accent, #f97316);
+  line-height: 1.8;
+  padding-top: 2px;
+  min-width: 28px;
+}
+.vg-step__body h3 {
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: var(--text-primary, #fff);
+}
+.vg-step__body p { margin: 0 0 12px; }
+.vg-step__body p:last-child { margin-bottom: 0; }
+
+/* ── Inline list ────────────────────────────────────────────────────────────── */
+.vg-list {
+  margin: 16px 0 20px 0;
+  padding-left: 1.25em;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.vg-list li {
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+.vg-list li strong {
+  color: var(--text-primary);
+}
+
+/* ── Pull-quote ─────────────────────────────────────────────────────────────── */
+.vg-pullquote {
+  border-left: 3px solid var(--accent, #f97316);
+  margin: clamp(28px, 3vw, 40px) 0 0;
+  padding: 12px 0 12px 24px;
+  font-size: clamp(1rem, 1.35vw, 1.125rem);
+  font-style: italic;
+  color: var(--text-secondary, rgba(255,255,255,0.7));
+  line-height: 1.65;
+}
+
+/* ── Pangea DS: editorial stage layout ─────────────────────────────────────── */
+.pg-stages {
+  margin-top: clamp(40px, 5vw, 56px);
+}
+
+.pg-stage {
+  margin-top: clamp(64px, 8vw, 80px);
+}
+.pg-stage:first-child {
+  margin-top: 0;
+}
+
+.pg-stage__num {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.pg-stage__title {
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+}
+
+.pg-stage__body {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 620px;
+}
+
+.pg-stage__fig {
+  margin-top: 24px;
+}
+.pg-stage__fig img {
+  width: 100%;
+  display: block;
+  border-radius: var(--r-xl, 16px);
+  border: 1px solid var(--border);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Token layers — three-part compact grid */
+.pg-token-layers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.pg-token-layer {
+  padding: 20px 24px 20px 0;
+  border-right: 1px solid var(--border);
+  padding-right: 24px;
+}
+.pg-token-layer:first-child { padding-left: 0; }
+.pg-token-layer:last-child {
+  border-right: none;
+  padding-right: 0;
+  padding-left: 24px;
+}
+.pg-token-layer:not(:first-child):not(:last-child) {
+  padding-left: 24px;
+}
+
+.pg-token-layer__label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.pg-token-layer p {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .pg-token-layers {
+    grid-template-columns: 1fr;
+  }
+  .pg-token-layer {
+    padding: 16px 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .pg-token-layer:last-child {
+    border-bottom: none;
+    padding-left: 0;
+  }
+  .pg-token-layer:not(:first-child):not(:last-child) {
+    padding-left: 0;
+  }
+}

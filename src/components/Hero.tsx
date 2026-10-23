@@ -1,319 +1,299 @@
-import { LINKS } from '../data/content';
+import { useEffect, useState, Fragment } from 'react';
+import { WORK_ENTRIES } from '../data/content';
+import { HeroCube } from './HeroCube';
 
-interface HeroProps {
-  showStats?: boolean;
+const GREETINGS = ['Hello', 'Hola', 'नमस्ते', 'Bonjour', 'こんにちは'];
+
+function useTypingAnimation(enabled: boolean) {
+  const [idx, setIdx] = useState(0);
+  const [text, setText] = useState('');
+  const [phase, setPhase] = useState<'typing' | 'holding' | 'deleting'>('typing');
+
+  useEffect(() => {
+    if (!enabled) { setText(GREETINGS[0]); return; }
+
+    const word = GREETINGS[idx];
+    const chars = Array.from(word);
+    const current = Array.from(text).length;
+
+    if (phase === 'typing') {
+      if (current < chars.length) {
+        const t = setTimeout(() => setText(chars.slice(0, current + 1).join('')), 85);
+        return () => clearTimeout(t);
+      } else {
+        const t = setTimeout(() => setPhase('holding'), 1400);
+        return () => clearTimeout(t);
+      }
+    }
+
+    if (phase === 'holding') {
+      const t = setTimeout(() => setPhase('deleting'), 200);
+      return () => clearTimeout(t);
+    }
+
+    if (phase === 'deleting') {
+      if (current > 0) {
+        const t = setTimeout(() => setText(chars.slice(0, current - 1).join('')), 45);
+        return () => clearTimeout(t);
+      } else {
+        const t = setTimeout(() => {
+          setIdx(i => (i + 1) % GREETINGS.length);
+          setPhase('typing');
+        }, 320);
+        return () => clearTimeout(t);
+      }
+    }
+  }, [text, phase, idx, enabled]);
+
+  return { text, showCursor: phase !== 'holding' };
 }
 
-const rise = (delay: number): React.CSSProperties => ({
-  animation: 'om-rise .7s cubic-bezier(.16,1,.3,1) both',
-  animationDelay: `${delay}ms`,
-});
+const TAGS = ['Product design', '0 → 1', 'Design + code'];
 
+const PREVIOUSLY = WORK_ENTRIES.filter(e => ['ion', 'punchh', 'compunnel'].includes(e.id));
 
-export function Hero({ showStats = true }: HeroProps) {
+const SHORT_NAMES: Record<string, string> = {
+  'Compunnel Digital': 'Compunnel',
+};
+
+export function Hero() {
+  const [visible, setVisible] = useState(false);
+  const prefersReducedMotion = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    : false;
+
+  const { text: greeting, showCursor } = useTypingAnimation(!prefersReducedMotion);
+
+  useEffect(() => {
+    if (prefersReducedMotion) { setVisible(true); return; }
+    const raf = requestAnimationFrame(() => {
+      requestAnimationFrame(() => setVisible(true));
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [prefersReducedMotion]);
+
   return (
     <section
-      aria-labelledby="hero-title"
-      data-screen-label="Hero"
       style={{
-        maxWidth: 1240,
-        width: '100%',
-        margin: '0 auto',
-        padding:
-          'clamp(90px,10vw,120px) clamp(20px,3vw,40px) 32px',
+        minHeight: '75vh',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        gap: 24,
+        justifyContent: 'center',
+        paddingTop: 'var(--header-h)',
+        paddingBottom: 0,
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'none' : 'translateY(10px)',
+        transition: prefersReducedMotion ? 'none' : 'opacity 500ms var(--ease-out), transform 500ms var(--ease-out)',
       }}
     >
-      <div
-        style={{
-          width: '100%',
-          maxWidth: 523,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 12,
-          textAlign: 'center',
-        }}
-      >
-        {/* Availability pill with animated live pulse */}
-        <span
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 4,
-            padding: '2px 13px',
-            borderRadius: 48,
-            background: 'rgba(255,255,255,.1)',
-            ...rise(120),
-          }}
-        >
-          <span
-            aria-hidden="true"
-            style={{
-              position: 'relative',
-              flex: 'none',
-              display: 'grid',
-              placeItems: 'center',
-              width: 18,
-              height: 18,
-              borderRadius: '50%',
-              background: 'rgba(65,255,122,.24)',
-            }}
-          >
-            <span
-              style={{
-                position: 'absolute',
-                inset: 0,
-                margin: 'auto',
-                width: 10,
-                height: 10,
-                borderRadius: '50%',
-                border: '1.5px solid rgba(140,232,96,.9)',
-                animation: 'om-live 3.6s ease-out infinite',
-              }}
-            />
-            <span
-              style={{
-                position: 'absolute',
-                inset: 0,
-                margin: 'auto',
-                width: 10,
-                height: 10,
-                borderRadius: '50%',
-                border: '1.5px solid rgba(140,232,96,.7)',
-                animation: 'om-live 3.6s ease-out infinite',
-                animationDelay: '1.8s',
-              }}
-            />
-            <span
-              style={{
-                position: 'relative',
-                display: 'block',
-                width: 8,
-                height: 8,
-                borderRadius: '50%',
-                background: '#70D44B',
-                boxShadow: '0 0 8px rgba(112,212,75,.8)',
-                animation: 'om-live-core 3.6s ease-in-out infinite',
-              }}
-            />
-          </span>
-          <span
-            style={{
-              fontSize: 16,
-              fontWeight: 500,
-              lineHeight: '28px',
-              color: '#fff',
-            }}
-          >
-            Available
-          </span>
-        </span>
+      <div className="container">
+        <div className="hero-grid" style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 210px',
+          gap: 40,
+          alignItems: 'flex-start',
+        }}>
 
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 12,
-          }}
-        >
-          <h1
-            id="hero-title"
-            style={{
-              fontFamily: "'The Seasons'",
-              fontWeight: 700,
-              fontSize: 'clamp(30px,4.2vw,42px)',
-              lineHeight: '100%',
-              color: '#fff',
-              textWrap: 'pretty',
-              ...rise(220),
-            }}
-          >
-            design brands and products
-          </h1>
-          <p
-            style={{
-              maxWidth: 456,
-              fontSize: 'clamp(17px,1.5vw,20px)',
-              fontWeight: 500,
-              lineHeight: '28px',
-              color: 'rgba(255,255,255,.8)',
-              textWrap: 'pretty',
-              ...rise(320),
-            }}
-          >
-            Your vision. My craft. Let&rsquo;s make something great together.
-          </p>
-        </div>
+          {/* Left: greeting + headline + subtext + tags + previously */}
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
 
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 12,
-            marginTop: 20,
-            ...rise(420),
-          }}
-        >
-          <a
-            href={LINKS.tally}
-            className="btn-green"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 10,
-              minHeight: 48,
-              padding: '13px 19px',
-              borderRadius: 19,
-              background: '#90E02E',
-              color: '#000',
-              fontSize: 16,
-              fontWeight: 700,
-              lineHeight: '100%',
-              whiteSpace: 'nowrap',
-              transition:
-                'background 260ms ease,box-shadow 300ms ease,transform 220ms ease',
-            }}
-          >
-            Book a Free Call
-          </a>
-          <a
-            href={LINKS.whatsapp}
-            className="btn-ghost"
-            target="_blank"
-            rel="noopener"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+            {/* Typing greeting */}
+            <p style={{
+              fontSize: '0.9375rem',
+              color: 'var(--text-secondary)',
+              marginBottom: 20,
+              fontWeight: 400,
+              minHeight: '1.4em',
+            }}>
+              {greeting}
+              {showCursor && (
+                <span className="typing-cursor" aria-hidden="true">|</span>
+              )}
+            </p>
+
+            <h1 style={{
+              fontSize: 'clamp(1.75rem, 3.5vw, 2.375rem)',
+              fontWeight: 500,
+              lineHeight: 1.18,
+              letterSpacing: '-0.03em',
+              color: 'var(--text-primary)',
+              maxWidth: 520,
+              margin: 0,
+            }}>
+              In a world built by AI, I design for people.
+            </h1>
+
+            <p style={{
+              fontSize: '0.9375rem',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.7,
+              marginTop: 20,
+              marginBottom: 0,
+              maxWidth: 480,
+            }}>
+              With 12+ years in product design, I turn complex ideas into useful products — and use AI to take more of those ideas from concept to reality.
+            </p>
+
+            {/* Tag pills */}
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
               gap: 8,
-              minHeight: 48,
-              padding: '13px 19px',
-              borderRadius: 19,
-              background: 'rgba(255,255,255,.05)',
-              border: '1px solid rgba(255,255,255,.14)',
-              color: '#F2F3F7',
-              fontSize: 16,
-              fontWeight: 600,
-              lineHeight: '100%',
-              whiteSpace: 'nowrap',
-              transition:
-                'border-color 300ms ease,background 300ms ease,box-shadow 320ms ease,transform 220ms ease',
-            }}
-          >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              width="19"
-              height="19"
-              fill="#25D366"
-              style={{ flex: 'none', display: 'block' }}
-            >
-              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.41.09-.17.04-.31-.02-.44-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.11-.22-.17-.47-.29Z" />
-            </svg>{' '}
-            WhatsApp
-          </a>
+              marginTop: 24,
+            }}>
+              {TAGS.map(tag => (
+                <span
+                  key={tag}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    padding: '6px 14px',
+                    background: 'var(--bg-subtle)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 9999,
+                    fontSize: '0.8125rem',
+                    fontWeight: 500,
+                    color: 'var(--text-secondary)',
+                    lineHeight: 1,
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* Currently + Previously group */}
+            <div style={{ marginTop: 36 }}>
+            <p style={{
+              fontSize: '0.9375rem',
+              color: 'var(--text-secondary)',
+              marginTop: 0,
+              marginBottom: 10,
+              fontWeight: 400,
+            }}>
+              <span style={{ color: 'var(--accent)', marginRight: 6 }}>●</span>
+              Currently designing at Pangea
+            </p>
+
+            {/* Previously row */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: 0,
+              rowGap: 8,
+            }}>
+              <span style={{
+                fontSize: '0.9375rem',
+                color: 'var(--text-tertiary)',
+                marginRight: 12,
+              }}>
+                Previously
+              </span>
+
+              {PREVIOUSLY.map((entry, i) => (
+                <Fragment key={entry.id}>
+                  {i > 0 && (
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        fontSize: '0.75rem',
+                        color: 'var(--text-tertiary)',
+                        marginLeft: 8,
+                        marginRight: 8,
+                        userSelect: 'none',
+                      }}
+                    >
+                      ·
+                    </span>
+                  )}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <div style={{
+                      width: 22,
+                      height: 22,
+                      borderRadius: 9999,
+                      overflow: 'hidden',
+                      background: entry.logo ? 'var(--bg-surface)' : entry.color + '1a',
+                      border: '1px solid var(--border)',
+                      flexShrink: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                      {entry.logo
+                        ? <img
+                            src={entry.logo}
+                            alt=""
+                            aria-hidden="true"
+                            style={{ width: '100%', height: '100%', objectFit: 'contain', padding: 2 }}
+                          />
+                        : <span style={{ fontSize: 9, fontWeight: 700, color: entry.color, lineHeight: 1 }}>
+                            {entry.company[0]}
+                          </span>
+                      }
+                    </div>
+                    <span style={{
+                      fontSize: '0.9375rem',
+                      color: 'var(--text-secondary)',
+                      fontWeight: 400,
+                    }}>
+                      {SHORT_NAMES[entry.company] ?? entry.company}
+                    </span>
+                  </div>
+                </Fragment>
+              ))}
+
+              <span
+                aria-hidden="true"
+                style={{
+                  fontSize: '0.9375rem',
+                  color: 'var(--text-tertiary)',
+                  marginLeft: 8,
+                  marginRight: 8,
+                  userSelect: 'none',
+                }}
+              >
+                ·
+              </span>
+              <span style={{
+                fontSize: '0.9375rem',
+                color: 'var(--text-tertiary)',
+                fontWeight: 400,
+              }}>
+                More
+              </span>
+            </div>
+            </div>{/* end currently+previously group */}
+
+          </div>
+
+          {/* Right: Rubik's cube — floats directly on hero background */}
+          <div className="hero-cube" style={{ flexShrink: 0, width: 210, display: 'flex', justifyContent: 'center' }}>
+            <div style={{ transform: 'scale(1.3)', transformOrigin: 'top center' }}>
+              <HeroCube />
+            </div>
+          </div>
+
         </div>
       </div>
 
-      {showStats && (
-        <div
-          style={{
-            width: '100%',
-            maxWidth: 533,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 12,
-            marginTop: 24,
-            padding: '1px 10px',
-          }}
-        >
-          <div
-            style={{
-              flex: 1,
-              minWidth: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 4,
-              alignItems: 'center',
-              ...rise(520),
-            }}
-          >
-            <span
-              style={{
-                fontSize: 25,
-                fontWeight: 700,
-                lineHeight: '28px',
-                color: '#fff',
-              }}
-            >
-              12+
-            </span>
-            <span
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                lineHeight: '28px',
-                color: 'rgba(255,255,255,.6)',
-              }}
-            >
-              Years of experience
-            </span>
-          </div>
-          <span
-            aria-hidden="true"
-            style={{
-              flex: 'none',
-              alignSelf: 'center',
-              width: 1,
-              height: 85,
-              background: 'rgba(255,255,255,.16)',
-            }}
-          />
-          <div
-            style={{
-              flex: 1,
-              minWidth: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 4,
-              alignItems: 'center',
-              ...rise(580),
-            }}
-          >
-            <span
-              style={{
-                fontSize: 25,
-                fontWeight: 700,
-                lineHeight: '28px',
-                color: '#fff',
-              }}
-            >
-              50+
-            </span>
-            <span
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                lineHeight: '28px',
-                color: 'rgba(255,255,255,.6)',
-              }}
-            >
-              Project Delivered
-            </span>
-          </div>
-        </div>
-      )}
+      <style>{`
+        .typing-cursor {
+          display: inline-block;
+          margin-left: 1px;
+          color: var(--accent);
+          animation: blink 900ms step-end infinite;
+          font-weight: 300;
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0; }
+        }
+        @media (max-width: 600px) {
+          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-cube { display: none !important; }
+        }
+      `}</style>
     </section>
   );
 }

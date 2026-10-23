@@ -1,289 +1,437 @@
-/* ==========================================================================
-   Paras Bhatnagar — Portfolio
-   Global styles ported verbatim from the Claude Design (.dc.html) source of
-   truth. The DC runtime (support.js / <x-dc> / DCLogic) has been removed.
-   ========================================================================== */
+/* ============================================================
+   DESIGN TOKENS — Poppins / Warm Neutral
+   ============================================================ */
 
-/* Custom fonts declared by the source. The export ships no font files so the
-   browser falls back to the web fonts loaded in index.html (Plus Jakarta Sans
-   for body Playfair Display for the serif display face) — identical to how the
-   original .dc.html renders. To use the real faces drop the .woff2/.otf files
-   into /public/fonts and these @font-face rules will pick them up. */
-@font-face {
-  font-family: 'Metropolis';
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-  src: 
-    url('/fonts/Metropolis-Medium.otf') format('opentype');
+:root {
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Spacing */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  /* Radius */
+  --r-sm:  20px;
+  --r-md:  24px;
+  --r-lg:  28px;
+  --r-xl:  32px;
+  --r-2xl: 40px;
+  --r-pill: 9999px;
+
+  /* Layout — narrower editorial width matching reference */
+  --max-w: 860px;
+  --px:    40px;
+  --header-h: 68px;
+  --section-py: clamp(40px, 4.5vw, 64px);
+
+  /* Animation */
+  --dur-quick: 150ms;
+  --dur-base:  220ms;
+  --dur-slow:  350ms;
+  --ease-quick: cubic-bezier(0.2, 0, 0.4, 1);
+  --ease-out:   cubic-bezier(0.0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Light theme (default) ── */
+  --bg:            #EEEAE4;
+  --bg-surface:    #FFFFFF;
+  --bg-subtle:     #E8E4DE;
+  --bg-inset:      #E0DDD7;
+  --bg-card:       #FFFFFF;
+  --text-primary:  #111111;
+  --text-secondary:#666666;
+  --text-tertiary: #767676; /* WCAG AA: 3.83:1 on light bg */
+  --border:        rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --border-hi:     rgba(0,0,0,0.12);
+
+  /* Accent — Claude orange */
+  --accent:        #D4693A;
+  --accent-soft:   rgba(212,105,58,0.08);
+  --accent-on:     #FFFFFF;
+
+  /* Cube — light theme: warm grey faces, mid-grey edges, restrained orange */
+  --cube-face:     #D4D0CA;
+  --cube-edge:     rgba(0,0,0,0.22);
+  --cube-hi-fill:  rgba(212,105,58,0.16);
+  --cube-hi-edge:  #C05828;
+
+  /* Shadows — soft, natural */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.09), 0 4px 8px rgba(0,0,0,0.04);
+  --shadow-pill: 0 2px 12px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
 }
-@font-face {
-  font-family: 'Metropolis';
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-  src: 
-    url('/fonts/Metropolis-SemiBold.otf') format('opentype');
+
+/* ── Dark mode (media) ── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:            #141414;
+    --bg-surface:    #1C1C1C;
+    --bg-subtle:     #222222;
+    --bg-inset:      #2A2A2A;
+    --bg-card:       #1C1C1C;
+    --text-primary:  #F0EDE8;
+    --text-secondary:#9A9A9A;
+    --text-tertiary: #8B8B8B; /* WCAG AA: 5.41:1 on dark bg */
+    --border:        rgba(255,255,255,0.08);
+    --border-subtle: rgba(255,255,255,0.05);
+    --border-hi:     rgba(255,255,255,0.14);
+    --accent:        #E07848;
+    --accent-soft:   rgba(224,120,72,0.12);
+    --accent-on:     #FFFFFF;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+    --shadow-pill: 0 2px 12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+    /* Cube — dark theme: charcoal faces, soft grey edges */
+    --cube-face:     #252525;
+    --cube-edge:     rgba(255,255,255,0.18);
+    --cube-hi-fill:  rgba(224,120,72,0.22);
+    --cube-hi-edge:  #E07848;
+  }
 }
-@font-face {
-  font-family: 'Metropolis';
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-  src: 
-    url('/fonts/Metropolis-Bold.otf') format('opentype');
+
+/* ── Explicit dark ── */
+:root[data-theme="dark"] {
+  --bg:            #141414;
+  --bg-surface:    #1C1C1C;
+  --bg-subtle:     #222222;
+  --bg-inset:      #2A2A2A;
+  --bg-card:       #1C1C1C;
+  --text-primary:  #F0EDE8;
+  --text-secondary:#9A9A9A;
+  --text-tertiary: #8B8B8B; /* WCAG AA: 5.41:1 on dark bg */
+  --border:        rgba(255,255,255,0.08);
+  --border-subtle: rgba(255,255,255,0.05);
+  --border-hi:     rgba(255,255,255,0.14);
+  --accent:        #E07848;
+  --accent-soft:   rgba(224,120,72,0.12);
+  --accent-on:     #FFFFFF;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+  --shadow-pill: 0 2px 12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+  /* Cube — dark theme: charcoal faces, soft grey edges */
+  --cube-face:     #252525;
+  --cube-edge:     rgba(255,255,255,0.18);
+  --cube-hi-fill:  rgba(224,120,72,0.22);
+  --cube-hi-edge:  #E07848;
 }
-@font-face {
-  font-family: 'The Seasons';
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-  src: 
-    url('/fonts/TheSeasons-Bold.otf') format('opentype');
+
+/* ── Explicit light override ── */
+:root[data-theme="light"] {
+  --bg:            #EEEAE4;
+  --bg-surface:    #FFFFFF;
+  --bg-subtle:     #E8E4DE;
+  --bg-inset:      #E0DDD7;
+  --bg-card:       #FFFFFF;
+  --text-primary:  #111111;
+  --text-secondary:#666666;
+  --text-tertiary: #767676; /* WCAG AA: 3.83:1 on light bg */
+  --border:        rgba(0,0,0,0.08);
+  --border-subtle: rgba(0,0,0,0.05);
+  --border-hi:     rgba(0,0,0,0.12);
+  --accent:        #D4693A;
+  --accent-soft:   rgba(212,105,58,0.08);
+  --accent-on:     #FFFFFF;
+  --shadow-pill: 0 2px 12px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
+  /* Cube — explicit light override */
+  --cube-face:     #D4D0CA;
+  --cube-edge:     rgba(0,0,0,0.22);
+  --cube-hi-fill:  rgba(212,105,58,0.16);
+  --cube-hi-edge:  #C05828;
 }
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
+  font-size: 16px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  background: #05050a;
 }
+
 body {
-  margin: 0;
-  background: #05050a;
-  color: #f2f3f7;
-  font-family: 'Metropolis',
-    Helvetica Arial, sans-serif;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
-* {
-  box-sizing: border-box;
-}
-a {
-  color: #a6e85c;
-  text-decoration: none;
-}
-a:hover {
-  color: #c4f291;
-}
-h1
-h2
-h3
-h4
-p
-figure
-blockquote {
-  margin: 0;
-}
-button
-input
-textarea {
-  font: inherit;
-  color: inherit;
-}
+
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { background: none; border: none; cursor: pointer; font-family: inherit; }
+ul, ol { list-style: none; }
+
+/* Focus ring */
 :focus-visible {
-  outline: 2px solid #79d208;
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 8px;
-}
-::selection {
-  background: rgba(121 210, 8, 0.35);
-}
-::placeholder {
-  color: #5e606c;
+  border-radius: 4px;
 }
 
-/* Keyframes ---------------------------------------------------------------- */
-@keyframes om-rise {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes om-panel {
-  from {
-    opacity: 0;
-    transform: translateY(-12px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes om-live {
-  0% {
-    transform: scale(0.85);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(2.6);
-    opacity: 0;
-  }
-}
-@keyframes om-live-core {
-  0% {
-  }
-  100% {
-    opacity: 0.82;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-@keyframes om-tscroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-/* Material Symbols helper -------------------------------------------------- */
-.om-ms {
-  font-family: 'Material Symbols Rounded';
-  font-weight: 400;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  white-space: nowrap;
-  direction: ltr;
-  -webkit-font-feature-settings: 'liga';
-  font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--px);
 }
 
-/* -------------------------------------------------------------------------
-   Hover / focus / active states.
-   The DC runtime applied style-hover / style-focus / style-active pseudo
-   attributes at runtime; here they become real CSS so the markup stays clean.
-   Each element opts in via a class below.
-   ------------------------------------------------------------------------- */
+.section {
+  padding: var(--section-py) 0;
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-/* Skip link */
+/* ============================================================
+   SKIP LINK
+   ============================================================ */
+
 .skip-link {
   position: absolute;
-  left: -9999px;
-  top: 0;
-  padding: 12px 16px;
-  background: #15161f;
-  color: #fff;
-  border-radius: 12px;
+  top: -100%;
+  left: var(--px);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--r-md);
+  z-index: 9999;
 }
-.skip-link:focus {
-  left: 16px;
-  top: 16px;
-  z-index: 200;
+.skip-link:focus { top: 8px; }
+
+/* ============================================================
+   SITE CONTENT — fade in after intro
+   ============================================================ */
+
+.site-content {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+.site-content--visible {
+  opacity: 1;
+  visibility: visible;
 }
 
-/* Nav "Let's Talk" link */
-.nav-talk:hover {
-  color: #b0ee62;
-  filter: drop-shadow(0 0 12px rgba(144 224, 46, 0.55));
+/* ============================================================
+   MATERIAL SYMBOLS UTILITY
+   ============================================================ */
+
+.icon {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  font-size: inherit;
+  line-height: 1;
+  display: inline-block;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
 }
 
-/* Mobile "Menu" button */
-.menu-btn:active {
-  transform: scale(0.97);
+/* ============================================================
+   SECTION HEADER PATTERN
+   ============================================================ */
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
 }
 
-/* Mobile menu links + CTA */
-.mobile-link:hover {
-  background: rgba(255 255, 255, 0.05);
-  color: #f2f3f7;
-}
-.mobile-cta:hover {
-  color: #fff;
-  border-color: rgba(150 231, 60, 0.9);
-  box-shadow: 0 10px 34px -10px rgba(101 180, 10, 0.8),
-    inset 0 -20px 28px -20px rgba(165 235, 90, 0.8);
+.section-title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.2;
 }
 
-/* Hero primary (green) button */
-.btn-green:hover {
-  color: #000;
-  background: #9eeb3c;
-  box-shadow: 0 10px 34px -10px rgba(144 224, 46, 0.85);
+.section-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color var(--dur-quick) var(--ease-quick);
 }
-.btn-green:active {
-  transform: scale(0.98);
+.section-link:hover { color: var(--accent); }
+.section-link .icon { font-size: 16px; }
+
+/* ============================================================
+   PROJECT CARD — shared between Work and AI sections
+   ============================================================ */
+
+.proj-card {
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-/* Hero secondary (WhatsApp) button */
-.btn-ghost:hover {
-  color: #f2f3f7;
-  background: rgba(255 255, 255, 0.08);
-  border-color: rgba(150 231, 60, 0.7);
-  box-shadow: 0 10px 30px -14px rgba(121 210, 8, 0.8);
-}
-.btn-ghost:active {
-  transform: scale(0.98);
-}
-
-/* About LinkedIn button */
-.btn-green-sm:hover {
-  color: #000;
-  background: #9eeb3c;
-  box-shadow: 0 10px 30px -12px rgba(144 224, 46, 0.85);
-}
-.btn-green-sm:active {
-  transform: scale(0.98);
+.proj-card__img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--bg-subtle);
+  margin-bottom: 14px;
 }
 
-/* Closing CTA button */
-.btn-green-lg:hover {
-  color: #000;
-  background: #9eeb3c;
-  box-shadow: 0 12px 40px -12px rgba(144 224, 46, 0.9);
-}
-.btn-green-lg:active {
-  transform: scale(0.98);
+.proj-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 320ms var(--ease-out);
 }
 
-/* Testimonial LinkedIn chip */
-.tlink:hover {
-  color: #0a66c2;
-  background: rgba(255 255, 255, 0.09);
-  border-color: rgba(10 102, 194, 0.55);
+.proj-card:hover .proj-card__img-wrap img {
+  transform: scale(1.03);
 }
 
-/* Footer links + back-to-top */
-.footer-link:hover {
-  color: #fff;
-}
-.footer-top:hover {
-  color: #fff;
+.proj-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 5px;
+  line-height: 1.3;
 }
 
-/* Reduced motion ----------------------------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+.proj-card__desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.proj-card__meta {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.proj-card__tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  letter-spacing: 0.01em;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 900px) {
+  :root {
+    --px: 28px;
+    --max-w: 100%;
   }
-  *
-  *::before
-  *::after {
-    animation: none !important;
-    transition: none !important;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --px: 20px;
+    --section-py: clamp(32px, 4vw, 52px);
   }
-  /* Reveal-on-scroll elements shouldn't stay hidden without motion. */
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
+  .section-title { font-size: 1.375rem; }
+}
+
+/* Collapse 2-col grids on mobile */
+@media (max-width: 640px) {
+  .work-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 
-/* Reset default browser typography margins so spacing is controlled by gap */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin: 0;
+/* ============================================================
+   CONTACT SECTION
+   ============================================================ */
+
+.contact-email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 2px;
+  transition: opacity var(--dur-quick) var(--ease-quick);
 }
+.contact-email-link:hover { opacity: 0.6; }
+
+.contact-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-pill);
+  padding: 9px 18px;
+  min-height: 44px; /* WCAG 2.5.5: 44px touch target */
+  text-decoration: none;
+  transition: background var(--dur-quick) var(--ease-quick), color var(--dur-quick) var(--ease-quick);
+}
+.contact-pill:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ============================================================
+   CARD LINK — inline CTA used in AI section cards
+   ============================================================ */
+
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--dur-quick) var(--ease-quick);
+}
+.card-link:hover { color: var(--accent); }
